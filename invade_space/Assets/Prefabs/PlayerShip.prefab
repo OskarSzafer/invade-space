@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5283939084941509926}
   - component: {fileID: 4313280327491110593}
   - component: {fileID: 1780617207956299422}
+  - component: {fileID: 6643703636698685826}
   m_Layer: 0
-  m_Name: ShipController
+  m_Name: PlayerShip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,8 +99,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11b8fd0526ec29f4091e49301860a672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
-  rotationRate: 5
+  thrustForce: 10
+  rotationRate: 150
+--- !u!114 &6643703636698685826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933212983600747001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a7baf92d1ca3f84692d9b5914d5cb88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyTypeIndex: 3
+  bodyType: Ship
+  optionList:
+  - Star
+  - Planet
+  - Moon
+  - Ship
+  mass: 10
+  velocity: {x: 0, y: 0}
 --- !u!1 &2168523505581859580
 GameObject:
   m_ObjectHideFlags: 0

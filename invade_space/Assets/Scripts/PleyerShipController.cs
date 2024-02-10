@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipController : MonoBehaviour
+public class PlayerShipController : MonoBehaviour
 {
     // ship speed
-    public float force = 10.0f;
+    [SerializeField] protected float thrustForce = 10.0f;
     // ship rotation speed
-    protected float rotationRate = 100.0f;
+    [SerializeField] protected float rotationRate;
 
     // input
     protected Vector2 input = Vector2.zero;
@@ -17,8 +17,11 @@ public class ShipController : MonoBehaviour
     // thruster
     protected GameObject thruster;
     protected Transform thrusterTransform;
-    protected Vector2 thrustDirection;
+    // protected Vector2 thrustDirection;
     protected ParticleSystem thrusterParticleSystem;
+
+    // PhysicsProperty
+    protected PhysicsProperty physicsProperty;
 
 
     // Awake is called before the first frame update
@@ -32,7 +35,7 @@ public class ShipController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        physicsProperty = GetComponent<PhysicsProperty>();
     }
 
     // Update is called once per frame
@@ -44,14 +47,17 @@ public class ShipController : MonoBehaviour
         input.Normalize();
 
         ThrustControll();
+        
+        if (inputThrust > 0)
+        {
+            Thrust();
+        }
     }
 
-    // FUNCTIONS
 
     protected void ThrustControll()
     {
         float rotationAmount = rotationRate * Time.deltaTime;
-        Debug.Log(rotationAmount);
 
         // turn the thruster on or off
         if (inputThrust > 0)
@@ -78,6 +84,10 @@ public class ShipController : MonoBehaviour
 
     protected void Thrust()
     {
+        Vector2 force = thrusterTransform.rotation * Vector2.down * thrustForce * Time.deltaTime;
+        Debug.Log("force: " + force);
+        physicsProperty.ApplyForce(force);
+        
         //thrustDirection = new Vector2(Mathf.Cos(thrusterTransform.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(thrusterTransform.eulerAngles.z * Mathf.Deg2Rad));
         //GetComponent<Rigidbody2D>().AddForce(thrustDirection * force);
     }
