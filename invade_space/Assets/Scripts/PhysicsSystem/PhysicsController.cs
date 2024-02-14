@@ -62,7 +62,7 @@ public class PhysicsController : PhysicsSystem
                 float forceValue = gravitationalConstant * (source.GetComponent<PhysicsProperty>().Mass * target.GetComponent<PhysicsProperty>().Mass) / (distance * distance);
                 Vector2 force = forceDirection * forceValue;
 
-                target.GetComponent<PhysicsProperty>().ApplyForce(force * Time.deltaTime); // delta time not needed
+                target.GetComponent<PhysicsProperty>().ApplyForce(force * Time.deltaTime, source, true); // delta time not needed
             }
         }
     }

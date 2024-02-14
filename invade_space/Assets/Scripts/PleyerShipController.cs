@@ -49,7 +49,9 @@ public class PlayerShipController : Ship
 
         if (Input.GetKeyDown(KeyCode.F)) //orbit nearest celestial body
         {
-            physicsProperty.SetOnOrbit(physicsProperty.NearestGravitySource());
+            GameObject source = physicsProperty.NearestGravitySource();
+            physicsProperty.SetOnOrbit(source);
+            physicsProperty.KeepOnOrbit(source);
         }
     }
 
@@ -91,6 +93,5 @@ public class PlayerShipController : Ship
 }
 
 // TODO:
-// - keep on orbit
-// - add rotation
+// - add manual rotation
 // - set on orbit works only for if alredy in aproximate velocity

@@ -18,6 +18,8 @@ public class PhysicsProperty : PhysicsSystem
     
     // RUNTIME VARIABLES
     protected bool keptOnOrbit = false;
+    protected float keptOnOrbitForceThreshold;
+    protected GameObject OrbitTarget;
 
 
     void Awake()
@@ -96,7 +98,29 @@ public class PhysicsProperty : PhysicsSystem
 
     public void ApplyForce(Vector2 force)
     {
+        // applyed force should be multiplied by time
+        keptOnOrbit = false;
         velocity += force / mass;
+    }
+
+    public void ApplyForce(Vector2 force, GameObject source = null, bool isGravity = false)
+    {
+        // used for gravity/drag, ignores weak sources
+        // to avoid slow drift from trajectory
+
+        // applyed force should be multiplied by delta time
+        if(keptOnOrbit && source != OrbitTarget)
+        {
+            if (force.magnitude/Time.deltaTime > keptOnOrbitForceThreshold)
+            {
+                keptOnOrbit = false;
+                velocity += force / mass;
+            }
+        }
+        else
+        {
+            if (isGravity) velocity += force / mass;
+        }
     }
 
     public void SetOnOrbit(GameObject target)
@@ -107,21 +131,32 @@ public class PhysicsProperty : PhysicsSystem
         float orbitalSpeed = Mathf.Sqrt(gravitationalConstant * target.GetComponent<PhysicsProperty>().Mass / distance);
         Vector2 orbitalVelocity = Vector2.Perpendicular(forceDirection).normalized * orbitalSpeed;
 
-        if (Vector2.Dot(velocity, orbitalVelocity) < 0)
-        {
-            orbitalVelocity *= -1;
-        }
+        if (Vector2.Dot(velocity, orbitalVelocity) < 0) orbitalVelocity *= -1;
 
         velocity = orbitalVelocity;
     }
 
-    public void KeepOnOrbit(GameObject target = null, bool active = true)
+    public void KeepOnOrbit(GameObject target = null, float accelerationThreshold = 1.0f)
     {
+        // body ignore forces other then gravity of target, until threshold is reached
 
+        if (target == null) keptOnOrbit = false;
+        else
+        {
+            keptOnOrbit = true;
+            keptOnOrbitForceThreshold = accelerationThreshold * Mass;
+            OrbitTarget = target;
+        }
     }
 }
 
 //TODO:
-// - colision
+// - colision - virtual method
+//   for optimization, can be merged with gravity
+//   2nd matrix for colision dependences
+
 // - delete object from list on destroy or disable
-// - stmosferic drag
+// - atmosferic drag
+
+// - maybe cumulate forces and apply them in the end of the frame
+// then remake keepOnOrbit
