@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class PlayerShipController : Ship
 {
-    // ship speed
-    [SerializeField] protected float thrustForce = 10.0f;
-    // ship rotation speed
-    [SerializeField] protected float rotationRate;
-
-    // input
+    // INPUT
     protected Vector2 input = Vector2.zero;
     protected float inputRotation = 0.0f;
     protected float inputThrust = 0.0f;
 
-    // thruster
+    // THRUSTER
     protected GameObject thruster;
     protected Transform thrusterTransform;
     // protected Vector2 thrustDirection;
@@ -24,11 +19,11 @@ public class PlayerShipController : Ship
     // Awake is called before the first frame update
     void Awake()
     {
-        // Set the ship's position to the starting position
         thruster = GameObject.Find("Thruster");
         thrusterTransform = thruster.GetComponent<Transform>();
         thrusterParticleSystem = thruster.GetComponentInChildren<ParticleSystem>();
     }
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -52,7 +47,7 @@ public class PlayerShipController : Ship
 
         // INPUT
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F)) //orbit nearest celestial body
         {
             physicsProperty.SetOnOrbit(physicsProperty.NearestGravitySource());
         }
@@ -66,7 +61,6 @@ public class PlayerShipController : Ship
         // turn the thruster on or off
         if (inputThrust > 0)
         {
-            //thrusterParticleSystem.emission.enabled = true;
             var emission = thrusterParticleSystem.emission;
             emission.enabled = true;
 
@@ -80,7 +74,6 @@ public class PlayerShipController : Ship
         }
         else
         {
-            //thrusterParticleSystem.emission.enabled = false;
             var emission = thrusterParticleSystem.emission;
             emission.enabled = false;
         }
@@ -96,3 +89,8 @@ public class PlayerShipController : Ship
         //GetComponent<Rigidbody2D>().AddForce(thrustDirection * force);
     }
 }
+
+// TODO:
+// - keep on orbit
+// - add rotation
+// - set on orbit works only for if alredy in aproximate velocity

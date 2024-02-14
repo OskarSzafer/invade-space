@@ -6,7 +6,7 @@ public class PhysicsProperty : PhysicsSystem
 {
 
     // CELESTIAL BODY PROPERTIES
-    [HideInInspector] public int bodyTypeIndex = 0; // maybe to be removed
+    [HideInInspector] public int bodyTypeIndex = 0;
     [HideInInspector] public string bodyType;
     
     // BODY PROPERTIES
@@ -15,20 +15,15 @@ public class PhysicsProperty : PhysicsSystem
     public float Radius;
     // [SerializeField] public float radius;
     [SerializeField] protected Vector2 velocity = Vector2.zero;
+    
+    // RUNTIME VARIABLES
+    protected bool keptOnOrbit = false;
 
 
     void Awake()
     {
         mass = (mass == 0) ? 1 : mass;
-
-        if (bodyType == "Ship")
-        {
-            Radius = 0.5f; //transform.localScale.x / 2;
-        }
-        else
-        {
-            Radius = transform.localScale.x / 2;
-        }
+        Radius = transform.localScale.x / 2;
     }
 
     // Start is called before the first frame update
@@ -57,23 +52,46 @@ public class PhysicsProperty : PhysicsSystem
         transform.position = position;
     }
 
-    public GameObject NearestGravitySource() // setting sources as parameter
+    public GameObject NearestGravitySource(string[] types = null)
     {
         Vector3 position = gameObject.transform.position;
         float nearestDistance = Mathf.Infinity;
         GameObject nearestSource = null;
 
-        foreach (GameObject source in PhisicsObjects["Planet"])
+        if (types == null)
         {
-            float distance = Vector3.Distance(source.transform.position, position);
-            if (distance < nearestDistance)
+            for (int i = 0; i < gravityDependences.GetLength(0); i++)
             {
-                nearestDistance = distance;
-                nearestSource = source;
+                if (gravityDependences[i, bodyTypeIndex])
+                {
+                    NearestObject(optionList[i], ref nearestSource, ref nearestDistance);
+                }
+            }
+        }
+        else
+        {
+            foreach (string type in types)
+            {
+                NearestObject(type, ref nearestSource, ref nearestDistance);
             }
         }
 
         return nearestSource;
+    }
+
+    private void NearestObject(string type, ref GameObject nearestObject, ref float nearestDistance)
+    {
+        Vector3 position = gameObject.transform.position;
+
+        foreach (GameObject obj in PhisicsObjects[type])
+        {
+            float distance = Vector3.Distance(obj.transform.position, position);
+            if (distance < nearestDistance && obj != gameObject)
+            {
+                nearestDistance = distance;
+                nearestObject = obj;
+            }
+        }
     }
 
     public void ApplyForce(Vector2 force)
@@ -83,20 +101,27 @@ public class PhysicsProperty : PhysicsSystem
 
     public void SetOnOrbit(GameObject target)
     {
-        // TODO:
-        // - auto pick direction base on previus velocity
-        // - smooth transition
-
         Vector2 forceDirection = target.transform.position - transform.position;
         float distance = Vector2.Distance(target.transform.position, transform.position);
 
         float orbitalSpeed = Mathf.Sqrt(gravitationalConstant * target.GetComponent<PhysicsProperty>().Mass / distance);
         Vector2 orbitalVelocity = Vector2.Perpendicular(forceDirection).normalized * orbitalSpeed;
 
+        if (Vector2.Dot(velocity, orbitalVelocity) < 0)
+        {
+            orbitalVelocity *= -1;
+        }
+
         velocity = orbitalVelocity;
+    }
+
+    public void KeepOnOrbit(GameObject target = null, bool active = true)
+    {
+
     }
 }
 
 //TODO:
 // - colision
 // - delete object from list on destroy or disable
+// - stmosferic drag

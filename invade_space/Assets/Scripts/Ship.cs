@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
-    // PhysicsProperty
+    // ship speed
+    [SerializeField] protected float thrustForce = 10.0f;
+    // ship rotation speed
+    [SerializeField] protected float rotationRate;
+    // ship physics property
     protected PhysicsProperty physicsProperty;
 
     // Start is called before the first frame update

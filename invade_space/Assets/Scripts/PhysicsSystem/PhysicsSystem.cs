@@ -6,7 +6,7 @@ public class PhysicsSystem : MonoBehaviour
 {
     [HideInInspector] public string[] optionList = new string[] { "Star", "Planet", "Moon", "Ship"};
     public static Dictionary<string, List<GameObject>> PhisicsObjects;
-    protected float gravitationalConstant = 1.0f;
+    [HideInInspector] public static float gravitationalConstant = 1.0f;
 
     // Gravity dependences
     // colomn - target
