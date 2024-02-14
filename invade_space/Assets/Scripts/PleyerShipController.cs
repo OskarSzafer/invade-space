@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShipController : MonoBehaviour
+public class PlayerShipController : Ship
 {
     // ship speed
     [SerializeField] protected float thrustForce = 10.0f;
@@ -20,9 +20,6 @@ public class PlayerShipController : MonoBehaviour
     // protected Vector2 thrustDirection;
     protected ParticleSystem thrusterParticleSystem;
 
-    // PhysicsProperty
-    protected PhysicsProperty physicsProperty;
-
 
     // Awake is called before the first frame update
     void Awake()
@@ -33,9 +30,9 @@ public class PlayerShipController : MonoBehaviour
         thrusterParticleSystem = thruster.GetComponentInChildren<ParticleSystem>();
     }
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
-        physicsProperty = GetComponent<PhysicsProperty>();
+        base.Start();
     }
 
     // Update is called once per frame
@@ -51,6 +48,13 @@ public class PlayerShipController : MonoBehaviour
         if (inputThrust > 0)
         {
             Thrust();
+        }
+
+        // INPUT
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            physicsProperty.SetOnOrbit(physicsProperty.NearestGravitySource());
         }
     }
 

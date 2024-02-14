@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhysicsProperty : MonoBehaviour
+public class PhysicsProperty : PhysicsSystem
 {
 
     // CELESTIAL BODY PROPERTIES
     [HideInInspector] public int bodyTypeIndex = 0; // maybe to be removed
     [HideInInspector] public string bodyType;
-    [HideInInspector] public string[] optionList = new string[] { "Star", "Planet", "Moon", "Ship"};
     
     // BODY PROPERTIES
     [SerializeField] private float mass;
@@ -35,11 +34,7 @@ public class PhysicsProperty : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // add the object to the physics controller to take gravity into account
-        GameObject physicsControllerObject = GameObject.Find("PhysicsControllerObject");
-        PhysicsController physicsControllerScript = physicsControllerObject.GetComponent<PhysicsController>();
-
-        physicsControllerScript.PhisicsObjects[bodyTypeIndex].Add(gameObject);
+        PhisicsObjects[bodyType].Add(gameObject);
     }
 
     // Update is called once per frame
@@ -62,8 +57,46 @@ public class PhysicsProperty : MonoBehaviour
         transform.position = position;
     }
 
+    public GameObject NearestGravitySource() // setting sources as parameter
+    {
+        Vector3 position = gameObject.transform.position;
+        float nearestDistance = Mathf.Infinity;
+        GameObject nearestSource = null;
+
+        foreach (GameObject source in PhisicsObjects["Planet"])
+        {
+            float distance = Vector3.Distance(source.transform.position, position);
+            if (distance < nearestDistance)
+            {
+                nearestDistance = distance;
+                nearestSource = source;
+            }
+        }
+
+        return nearestSource;
+    }
+
     public void ApplyForce(Vector2 force)
     {
         velocity += force / mass;
     }
+
+    public void SetOnOrbit(GameObject target)
+    {
+        // TODO:
+        // - auto pick direction base on previus velocity
+        // - smooth transition
+
+        Vector2 forceDirection = target.transform.position - transform.position;
+        float distance = Vector2.Distance(target.transform.position, transform.position);
+
+        float orbitalSpeed = Mathf.Sqrt(gravitationalConstant * target.GetComponent<PhysicsProperty>().Mass / distance);
+        Vector2 orbitalVelocity = Vector2.Perpendicular(forceDirection).normalized * orbitalSpeed;
+
+        velocity = orbitalVelocity;
+    }
 }
+
+//TODO:
+// - colision
+// - delete object from list on destroy or disable
