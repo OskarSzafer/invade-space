@@ -46,10 +46,10 @@ public class PlayerShipController : Ship
         }
 
         // INPUT
-
+        GameObject source = physicsProperty.NearestGravitySource();
         if (Input.GetKeyDown(KeyCode.F)) //orbit nearest celestial body
         {
-            GameObject source = physicsProperty.NearestGravitySource();
+            // GameObject source = physicsProperty.NearestGravitySource();
             physicsProperty.SetOnOrbit(source);
             physicsProperty.KeepOnOrbit(source);
         }
@@ -84,11 +84,7 @@ public class PlayerShipController : Ship
     protected void Thrust()
     {
         Vector2 force = thrusterTransform.rotation * Vector2.down * thrustForce * Time.deltaTime;
-        Debug.Log("force: " + force);
         physicsProperty.ApplyForce(force);
-        
-        //thrustDirection = new Vector2(Mathf.Cos(thrusterTransform.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(thrusterTransform.eulerAngles.z * Mathf.Deg2Rad));
-        //GetComponent<Rigidbody2D>().AddForce(thrustDirection * force);
     }
 }
 

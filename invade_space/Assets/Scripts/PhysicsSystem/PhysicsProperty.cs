@@ -17,9 +17,11 @@ public class PhysicsProperty : PhysicsSystem
     [SerializeField] protected Vector2 velocity = Vector2.zero;
     
     // RUNTIME VARIABLES
+    protected Vector2 netForce = Vector2.zero; // sum of all forces between updates
+    // keep on orbit variables
     protected bool keptOnOrbit = false;
     protected float keptOnOrbitForceThreshold;
-    protected GameObject OrbitTarget;
+    protected GameObject OrbitSource;
 
 
     void Awake()
@@ -42,11 +44,32 @@ public class PhysicsProperty : PhysicsSystem
 
     void FixedUpdate()
     {
+        CalculateVelocity();
         MoveByVelocity();
     }
 
+    private void CalculateVelocity()
+    {
+        if (keptOnOrbit)
+        {
+            Vector2 GravitySourceForce = GravityBetween(gameObject, OrbitSource) * Time.deltaTime;
+            float drift = (GravitySourceForce - netForce).magnitude;
+            if (drift > keptOnOrbitForceThreshold)
+            {
+                Debug.Log("Orbit lost");
+                keptOnOrbit = false;
+            }
+            else
+            {
+                netForce = GravitySourceForce;
+            }
+        }
 
-    protected void MoveByVelocity()
+        velocity += netForce / mass;
+        netForce = Vector2.zero;
+    }
+
+    private void MoveByVelocity()
     {
         Vector2 position = transform.position;
         position.x = position.x + velocity.x * Time.deltaTime; // delta time not needed
@@ -81,7 +104,7 @@ public class PhysicsProperty : PhysicsSystem
         return nearestSource;
     }
 
-    private void NearestObject(string type, ref GameObject nearestObject, ref float nearestDistance)
+    private void NearestObject(string type, ref GameObject nearestObject, ref float nearestDistance) // for NearestGravitySource use
     {
         Vector3 position = gameObject.transform.position;
 
@@ -99,28 +122,7 @@ public class PhysicsProperty : PhysicsSystem
     public void ApplyForce(Vector2 force)
     {
         // applyed force should be multiplied by time
-        keptOnOrbit = false;
-        velocity += force / mass;
-    }
-
-    public void ApplyForce(Vector2 force, GameObject source = null, bool isGravity = false)
-    {
-        // used for gravity/drag, ignores weak sources
-        // to avoid slow drift from trajectory
-
-        // applyed force should be multiplied by delta time
-        if(keptOnOrbit && source != OrbitTarget)
-        {
-            if (force.magnitude/Time.deltaTime > keptOnOrbitForceThreshold)
-            {
-                keptOnOrbit = false;
-                velocity += force / mass;
-            }
-        }
-        else
-        {
-            if (isGravity) velocity += force / mass;
-        }
+        netForce += force;
     }
 
     public void SetOnOrbit(GameObject target)
@@ -136,16 +138,16 @@ public class PhysicsProperty : PhysicsSystem
         velocity = orbitalVelocity;
     }
 
-    public void KeepOnOrbit(GameObject target = null, float accelerationThreshold = 1.0f)
+    public void KeepOnOrbit(GameObject source = null, float accelerationThreshold = 1.0f)
     {
         // body ignore forces other then gravity of target, until threshold is reached
 
-        if (target == null) keptOnOrbit = false;
+        if (source == null) keptOnOrbit = false;
         else
         {
             keptOnOrbit = true;
             keptOnOrbitForceThreshold = accelerationThreshold * Mass;
-            OrbitTarget = target;
+            OrbitSource = source;
         }
     }
 }
@@ -157,6 +159,3 @@ public class PhysicsProperty : PhysicsSystem
 
 // - delete object from list on destroy or disable
 // - atmosferic drag
-
-// - maybe cumulate forces and apply them in the end of the frame
-// then remake keepOnOrbit

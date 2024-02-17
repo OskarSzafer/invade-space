@@ -6,7 +6,7 @@ public class PhysicsSystem : MonoBehaviour
 {
     [HideInInspector] public string[] optionList = new string[] { "Star", "Planet", "Moon", "Ship"};
     public static Dictionary<string, List<GameObject>> PhisicsObjects;
-    [HideInInspector] public static float gravitationalConstant = 1.0f;
+    [HideInInspector] public static float gravitationalConstant = 10.0f; // overlaps with inspector value, to fix
 
     // Gravity dependences
     // colomn - target
@@ -30,5 +30,20 @@ public class PhysicsSystem : MonoBehaviour
     void Update()
     {
         
+    }
+
+    protected Vector2 GravityBetween(GameObject target, GameObject source)
+    {
+        // calculate gravity force between two objects, even if disabled
+        if (source == target) return Vector2.zero;
+        
+        Vector2 forceDirection = source.transform.position - target.transform.position;
+        float distance = forceDirection.magnitude;
+        forceDirection.Normalize();
+
+        distance = Mathf.Max(distance, source.GetComponent<PhysicsProperty>().Radius + target.GetComponent<PhysicsProperty>().Radius);
+        float forceValue = gravitationalConstant * (source.GetComponent<PhysicsProperty>().Mass * target.GetComponent<PhysicsProperty>().Mass) / (distance * distance);
+        
+        return forceDirection * forceValue;
     }
 }

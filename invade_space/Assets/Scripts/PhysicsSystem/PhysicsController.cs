@@ -28,10 +28,10 @@ public class PhysicsController : PhysicsSystem
 
     void FixedUpdate()
     {
-        Gravity();
+        ForGravityDependencesTrue();
     }
 
-    private void Gravity()
+    private void ForGravityDependencesTrue()
     {
         for (int i = 0; i < optionList.Length; i++)
         {
@@ -39,30 +39,20 @@ public class PhysicsController : PhysicsSystem
             {
                 if (gravityDependences[i, j])
                 {
-                    GravityBetween(PhisicsObjects[optionList[j]], PhisicsObjects[optionList[i]]);
+                    ApplyGravity(PhisicsObjects[optionList[j]], PhisicsObjects[optionList[i]]);
                 }
             }
         }
     }
 
-    private void GravityBetween (List<GameObject> targets, List<GameObject> sources)
+    private void ApplyGravity (List<GameObject> targets, List<GameObject> sources)
     {
         foreach (GameObject source in sources)
         {
             foreach (GameObject target in targets)
             {
-                if (source == target) continue;
-
-                Vector2 forceDirection = source.transform.position - target.transform.position;
-                float distance = forceDirection.magnitude;
-                forceDirection.Normalize();
-
-                distance = Mathf.Max(distance, source.GetComponent<PhysicsProperty>().Radius + target.GetComponent<PhysicsProperty>().Radius);
-
-                float forceValue = gravitationalConstant * (source.GetComponent<PhysicsProperty>().Mass * target.GetComponent<PhysicsProperty>().Mass) / (distance * distance);
-                Vector2 force = forceDirection * forceValue;
-
-                target.GetComponent<PhysicsProperty>().ApplyForce(force * Time.deltaTime, source, true); // delta time not needed
+                Vector2 force = GravityBetween(target, source);
+                target.GetComponent<PhysicsProperty>().ApplyForce(force * Time.deltaTime); // delta time not needed
             }
         }
     }
