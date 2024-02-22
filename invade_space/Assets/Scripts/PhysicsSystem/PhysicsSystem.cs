@@ -17,6 +17,14 @@ public class PhysicsSystem : MonoBehaviour
         {false, false, true, true},
         {false, false, false, true},
         {false, false, false, false}
+    };
+
+    public bool[,] collisionDependences = new bool[4, 4]
+    {
+        {true, true, true, true},
+        {true, true, true, true},
+        {true, true, true, true},
+        {true, true, true, true}
     }; 
 
 
@@ -47,3 +55,12 @@ public class PhysicsSystem : MonoBehaviour
         return forceDirection * forceValue;
     }
 }
+
+//TODO:
+// - colision - virtual method
+//   for optimization, can be merged with gravity
+//   2nd matrix for colision dependences
+//
+// - delete object from list on destroy or disable
+//
+// - switch colomn and row in Dependences matrix

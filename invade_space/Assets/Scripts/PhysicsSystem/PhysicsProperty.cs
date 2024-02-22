@@ -10,10 +10,12 @@ public class PhysicsProperty : PhysicsSystem
     [HideInInspector] public string bodyType;
     
     // BODY PROPERTIES
-    [SerializeField] private float mass;
+    [SerializeField] protected float mass;
     public float Mass { get { return mass; } set { mass = (mass == 0) ? 1 : mass; } }
-    public float Radius;
-    // [SerializeField] public float radius;
+    [SerializeField] protected float radius;
+    public float Radius { get { return radius; } set { radius = (radius == 0) ? transform.localScale.x / 2 : radius; } }
+    [SerializeField] protected float atmosphereRadius;
+    public float AtmosphereRadius { get { return atmosphereRadius; } set { atmosphereRadius = (atmosphereRadius == 0) ? radius : atmosphereRadius; } }
     [SerializeField] protected Vector2 velocity = Vector2.zero;
     
     // RUNTIME VARIABLES
@@ -27,7 +29,8 @@ public class PhysicsProperty : PhysicsSystem
     void Awake()
     {
         mass = (mass == 0) ? 1 : mass;
-        Radius = transform.localScale.x / 2;
+        Radius = (Radius == 0) ? transform.localScale.x / 2 : Radius;
+        AtmosphereRadius = (AtmosphereRadius == 0) ? Radius : AtmosphereRadius;
     }
 
     // Start is called before the first frame update
@@ -125,6 +128,13 @@ public class PhysicsProperty : PhysicsSystem
         netForce += force;
     }
 
+    public virtual void CollisionDetected()
+    {
+        // virtual method for colision
+        // called by PhysicsController every fix amount of time when collision is detecteds
+        // called for every object colliding with this object
+    }
+
     public void SetOnOrbit(GameObject target)
     {
         Vector2 forceDirection = target.transform.position - transform.position;
@@ -151,11 +161,3 @@ public class PhysicsProperty : PhysicsSystem
         }
     }
 }
-
-//TODO:
-// - colision - virtual method
-//   for optimization, can be merged with gravity
-//   2nd matrix for colision dependences
-
-// - delete object from list on destroy or disable
-// - atmosferic drag

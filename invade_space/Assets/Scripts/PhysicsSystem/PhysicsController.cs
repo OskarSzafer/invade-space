@@ -28,32 +28,56 @@ public class PhysicsController : PhysicsSystem
 
     void FixedUpdate()
     {
-        ForGravityDependencesTrue();
+        ForPairOfBodyTypes();
     }
 
-    private void ForGravityDependencesTrue()
+    private void ForPairOfBodyTypes()
     {
         for (int i = 0; i < optionList.Length; i++)
         {
             for (int j = 0; j < optionList.Length; j++)
             {
-                if (gravityDependences[i, j])
-                {
-                    ApplyGravity(PhisicsObjects[optionList[j]], PhisicsObjects[optionList[i]]);
-                }
+                // executs for each pair of physics body types
+                ForPairOfBodies(PhisicsObjects[optionList[i]], PhisicsObjects[optionList[j]], i ,j);
+
             }
         }
     }
 
-    private void ApplyGravity (List<GameObject> targets, List<GameObject> sources)
+    private void ForPairOfBodies(List<GameObject> targets, List<GameObject> sources, int i, int j)
     {
         foreach (GameObject source in sources)
         {
             foreach (GameObject target in targets)
             {
-                Vector2 force = GravityBetween(target, source);
-                target.GetComponent<PhysicsProperty>().ApplyForce(force * Time.deltaTime); // delta time not needed
+                // executs for each pair of physics body
+                if (gravityDependences[j, i])
+                {
+                    ApplyGravity(target, source);
+                }
+
+                if (collisionDependences[j, i])
+                {
+                    ApplyAtmosphericDragAndCollision (target, source);
+                }
+
             }
         }
     }
+
+    private void ApplyGravity (GameObject target, GameObject source)
+    {
+        Vector2 force = GravityBetween(target, source);
+        target.GetComponent<PhysicsProperty>().ApplyForce(force * Time.deltaTime); // delta time not needed
+    }
+
+    private void ApplyAtmosphericDragAndCollision (GameObject target, GameObject source)
+    {
+        // drag and collision merged for optimization
+        // to be implemented
+    }
 }
+
+// can be optimized by merging gravity and collision into additional method
+// and not using GravityBetween
+// then every component can be called only once
