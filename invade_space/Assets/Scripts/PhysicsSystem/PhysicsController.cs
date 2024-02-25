@@ -11,7 +11,9 @@ public class PhysicsController : PhysicsSystem
         foreach (string option in optionList)
         {
             PhisicsObjects.Add(option, new List<GameObject>());
-        }      
+        }
+        Debug.Log("PhysicsController Awake");
+        ControllerReady = true;
     }
 
     // Start is called before the first frame update
@@ -33,8 +35,10 @@ public class PhysicsController : PhysicsSystem
 
     private void ForPairOfBodyTypes()
     {
+        //Debug.Log("ForPairOfBodyTypes");
         for (int i = 0; i < optionList.Length; i++)
         {
+            //Debug.Log(PhisicsObjects[optionList[i]].Count);
             for (int j = 0; j < optionList.Length; j++)
             {
                 // executs for each pair of physics body types
@@ -53,12 +57,12 @@ public class PhysicsController : PhysicsSystem
                 // executs for each pair of physics body
                 if (source == target) continue;
 
-                if (gravityDependences[j, i])
+                if (gravityDependences[i, j])
                 {
                     ApplyGravity(target, source);
                 }
 
-                if (collisionDependences[j, i])
+                if (collisionDependences[i, j])
                 {
                     ApplyAtmosphericDragAndCollision (target, source);
                 }
@@ -95,7 +99,6 @@ public class PhysicsController : PhysicsSystem
         if (distance < radiusSum)
         {
             // collision
-            Debug.Log("Collision detected");
             target.GetComponent<PhysicsProperty>().CollisionDetected();
         }
 

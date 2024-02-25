@@ -15,7 +15,9 @@ public class Ship : MonoBehaviour
     protected void Start()
     {
         physicsProperty = GetComponent<PhysicsProperty>();
-        physicsProperty.OnCollisionDetected += OnCollision; // Collision delegate
+
+        // Collision delegate - functions called when collision detected
+        physicsProperty.OnCollisionDetected += OnCollision;
     }
 
     // Update is called once per frame
@@ -24,7 +26,7 @@ public class Ship : MonoBehaviour
         
     }
 
-    protected void OnCollision() // Collision delegate
+    protected void OnCollision() 
     {
         Debug.Log("BOOM!");
     }

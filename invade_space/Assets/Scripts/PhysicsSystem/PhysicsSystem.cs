@@ -5,21 +5,23 @@ using UnityEngine;
 public class PhysicsSystem : MonoBehaviour
 {
     [HideInInspector] public string[] optionList = new string[] { "Star", "Planet", "Moon", "Ship"};
-    public static Dictionary<string, List<GameObject>> PhisicsObjects;
-    [HideInInspector] public static float gravitationalConstant = 1.0f; // overlaps with inspector value, to fix
-    [HideInInspector] public static float atmosphericDragConstant = 10.0f; // overlaps with inspector value, to fix
+    protected static Dictionary<string, List<GameObject>> PhisicsObjects;
+    protected static bool ControllerReady = false;
+    [HideInInspector] public static float gravitationalConstant = 1.0f; // TODO, overlaps with inspector value, to fix
+    [HideInInspector] public static float atmosphericDragConstant = 10.0f; // TODO, overlaps with inspector value, to fix
 
-    // Gravity dependences
-    // colomn - target
-    // row - source
+    // Dependences
+    // colomn - source
+    // row - target
     public bool[,] gravityDependences = new bool[4, 4]
     {
-        {false, true, true, true},
-        {false, false, true, true},
-        {false, false, false, true},
-        {false, false, false, false}
+        {false, false, false, false},
+        {true, false, false, false},
+        {true, true, false, false},
+        {true, true, true, false}
     };
 
+    // collision dependences determine allso if atmospheric drag occurs
     public bool[,] collisionDependences = new bool[4, 4]
     {
         {true, true, true, true},
@@ -59,5 +61,5 @@ public class PhysicsSystem : MonoBehaviour
 
 //TODO:
 // - delete object from list on destroy or disable
-//
-// - switch colomn and row in Dependences matrix
+// - disable keepOnOrbit if forces already overcomes treshold
+// - check when OnDisable is called in relation to OnDestroy

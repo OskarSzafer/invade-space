@@ -46,10 +46,9 @@ public class PlayerShipController : Ship
         }
 
         // INPUT
-        GameObject source = physicsProperty.NearestGravitySource();
         if (Input.GetKeyDown(KeyCode.F)) //orbit nearest celestial body
         {
-            // GameObject source = physicsProperty.NearestGravitySource();
+            GameObject source = physicsProperty.NearestGravitySource();
             physicsProperty.SetOnOrbit(source);
             physicsProperty.KeepOnOrbit(source);
         }

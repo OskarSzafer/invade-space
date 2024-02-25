@@ -40,13 +40,39 @@ public class PhysicsProperty : PhysicsSystem
         AtmosphereRadius = (atmosphereRadius < radius) ? Radius : AtmosphereRadius;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        PhisicsObjects[bodyType].Add(gameObject);
+        
     }
 
-    // Update is called once per frame
+    void OnDestroy()
+    {
+        Debug.Log("OnDestroy");
+    }
+
+    void OnEnable()
+    {
+        StartCoroutine(WaitForController());
+        Debug.Log("OnEnable");
+    }
+
+    void OnDisable()
+    {
+        Debug.Log("OnDisable");
+    }
+
+    private IEnumerator WaitForController()
+    {
+        // Wait until ControllerReady is true
+        while (!ControllerReady)
+        {
+            yield return null;
+        }
+
+        PhisicsObjects[bodyType].Add(gameObject);
+    }    
+
+
     void Update()
     {
 
@@ -97,7 +123,7 @@ public class PhysicsProperty : PhysicsSystem
         {
             for (int i = 0; i < gravityDependences.GetLength(0); i++)
             {
-                if (gravityDependences[i, bodyTypeIndex])
+                if (gravityDependences[bodyTypeIndex, i])
                 {
                     NearestObject(optionList[i], ref nearestSource, ref nearestDistance);
                 }
