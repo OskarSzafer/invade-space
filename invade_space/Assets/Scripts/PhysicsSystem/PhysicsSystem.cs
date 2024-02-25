@@ -6,7 +6,8 @@ public class PhysicsSystem : MonoBehaviour
 {
     [HideInInspector] public string[] optionList = new string[] { "Star", "Planet", "Moon", "Ship"};
     public static Dictionary<string, List<GameObject>> PhisicsObjects;
-    [HideInInspector] public static float gravitationalConstant = 10.0f; // overlaps with inspector value, to fix
+    [HideInInspector] public static float gravitationalConstant = 1.0f; // overlaps with inspector value, to fix
+    [HideInInspector] public static float atmosphericDragConstant = 10.0f; // overlaps with inspector value, to fix
 
     // Gravity dependences
     // colomn - target
@@ -57,10 +58,6 @@ public class PhysicsSystem : MonoBehaviour
 }
 
 //TODO:
-// - colision - virtual method
-//   for optimization, can be merged with gravity
-//   2nd matrix for colision dependences
-//
 // - delete object from list on destroy or disable
 //
 // - switch colomn and row in Dependences matrix

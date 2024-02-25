@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("PhysicsController")]
+
 public class PhysicsProperty : PhysicsSystem
 {
 
@@ -15,8 +19,8 @@ public class PhysicsProperty : PhysicsSystem
     [SerializeField] protected float radius;
     public float Radius { get { return radius; } set { radius = (radius == 0) ? transform.localScale.x / 2 : radius; } }
     [SerializeField] protected float atmosphereRadius;
-    public float AtmosphereRadius { get { return atmosphereRadius; } set { atmosphereRadius = (atmosphereRadius == 0) ? radius : atmosphereRadius; } }
-    [SerializeField] protected Vector2 velocity = Vector2.zero;
+    public float AtmosphereRadius { get { return atmosphereRadius; } set { atmosphereRadius = (atmosphereRadius < radius) ? radius : atmosphereRadius; } }
+    [SerializeField] public Vector2 velocity = Vector2.zero;
     
     // RUNTIME VARIABLES
     protected Vector2 netForce = Vector2.zero; // sum of all forces between updates
@@ -24,13 +28,16 @@ public class PhysicsProperty : PhysicsSystem
     protected bool keptOnOrbit = false;
     protected float keptOnOrbitForceThreshold;
     protected GameObject OrbitSource;
+    // Collision delegate
+    public delegate void CollisionEventHandler();
+    public event CollisionEventHandler OnCollisionDetected;
 
 
     void Awake()
     {
         mass = (mass == 0) ? 1 : mass;
         Radius = (Radius == 0) ? transform.localScale.x / 2 : Radius;
-        AtmosphereRadius = (AtmosphereRadius == 0) ? Radius : AtmosphereRadius;
+        AtmosphereRadius = (atmosphereRadius < radius) ? Radius : AtmosphereRadius;
     }
 
     // Start is called before the first frame update
@@ -122,17 +129,15 @@ public class PhysicsProperty : PhysicsSystem
         }
     }
 
+    internal void CollisionDetected()
+    {
+        OnCollisionDetected?.Invoke();
+    }
+
     public void ApplyForce(Vector2 force)
     {
         // applyed force should be multiplied by time
         netForce += force;
-    }
-
-    public virtual void CollisionDetected()
-    {
-        // virtual method for colision
-        // called by PhysicsController every fix amount of time when collision is detecteds
-        // called for every object colliding with this object
     }
 
     public void SetOnOrbit(GameObject target)

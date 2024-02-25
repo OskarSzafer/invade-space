@@ -15,11 +15,17 @@ public class Ship : MonoBehaviour
     protected void Start()
     {
         physicsProperty = GetComponent<PhysicsProperty>();
+        physicsProperty.OnCollisionDetected += OnCollision; // Collision delegate
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    protected void OnCollision() // Collision delegate
+    {
+        Debug.Log("BOOM!");
     }
 }
