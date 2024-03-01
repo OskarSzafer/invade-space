@@ -35,10 +35,8 @@ public class PhysicsController : PhysicsSystem
 
     private void ForPairOfBodyTypes()
     {
-        //Debug.Log("ForPairOfBodyTypes");
         for (int i = 0; i < optionList.Length; i++)
         {
-            //Debug.Log(PhisicsObjects[optionList[i]].Count);
             for (int j = 0; j < optionList.Length; j++)
             {
                 // executs for each pair of physics body types

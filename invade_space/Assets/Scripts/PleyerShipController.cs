@@ -52,6 +52,11 @@ public class PlayerShipController : Ship
             physicsProperty.SetOnOrbit(source);
             physicsProperty.KeepOnOrbit(source);
         }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Destroy(gameObject);
+        }
     }
 
 

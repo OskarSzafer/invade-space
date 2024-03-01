@@ -45,23 +45,17 @@ public class PhysicsProperty : PhysicsSystem
         
     }
 
-    void OnDestroy()
-    {
-        Debug.Log("OnDestroy");
-    }
-
     void OnEnable()
     {
-        StartCoroutine(WaitForController());
-        Debug.Log("OnEnable");
+        StartCoroutine(WaitForControllerAndAdd());
     }
 
     void OnDisable()
     {
-        Debug.Log("OnDisable");
+        PhisicsObjects[bodyType].Remove(gameObject);
     }
 
-    private IEnumerator WaitForController()
+    private IEnumerator WaitForControllerAndAdd()
     {
         // Wait until ControllerReady is true
         while (!ControllerReady)
@@ -69,9 +63,11 @@ public class PhysicsProperty : PhysicsSystem
             yield return null;
         }
 
-        PhisicsObjects[bodyType].Add(gameObject);
-    }    
-
+        if(!PhisicsObjects[bodyType].Contains(gameObject))
+        {
+            PhisicsObjects[bodyType].Add(gameObject);
+        }
+    }
 
     void Update()
     {
@@ -185,7 +181,15 @@ public class PhysicsProperty : PhysicsSystem
 
         if (source == null) keptOnOrbit = false;
         else
-        {
+        {   
+            Vector2 GravitySourceForce = GravityBetween(gameObject, OrbitSource) * Time.deltaTime;
+            float drift = (GravitySourceForce - netForce).magnitude;
+            if (drift > keptOnOrbitForceThreshold)
+            {
+                Debug.Log("Orbit impossible");
+                return;
+            }
+
             keptOnOrbit = true;
             keptOnOrbitForceThreshold = accelerationThreshold * Mass;
             OrbitSource = source;

@@ -40,7 +40,7 @@ public class PhysicsSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     protected Vector2 GravityBetween(GameObject target, GameObject source)
@@ -60,6 +60,4 @@ public class PhysicsSystem : MonoBehaviour
 }
 
 //TODO:
-// - delete object from list on destroy or disable
-// - disable keepOnOrbit if forces already overcomes treshold
-// - check when OnDisable is called in relation to OnDestroy
+// - kept on orbit test for setting treshold
