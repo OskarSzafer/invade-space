@@ -52,6 +52,7 @@ public class PhysicsProperty : PhysicsSystem
 
     void OnDisable()
     {
+        Debug.Log("OnDisable");
         PhisicsObjects[bodyType].Remove(gameObject);
     }
 
@@ -182,17 +183,19 @@ public class PhysicsProperty : PhysicsSystem
         if (source == null) keptOnOrbit = false;
         else
         {   
-            Vector2 GravitySourceForce = GravityBetween(gameObject, OrbitSource) * Time.deltaTime;
+            keptOnOrbitForceThreshold = accelerationThreshold * Mass;
+
+            Vector2 GravitySourceForce = GravityBetween(gameObject, source) * Time.deltaTime;
             float drift = (GravitySourceForce - netForce).magnitude;
             if (drift > keptOnOrbitForceThreshold)
             {
                 Debug.Log("Orbit impossible");
-                return;
             }
-
-            keptOnOrbit = true;
-            keptOnOrbitForceThreshold = accelerationThreshold * Mass;
-            OrbitSource = source;
+            else
+            {
+                keptOnOrbit = true;
+                OrbitSource = source;
+            }
         }
     }
 }
