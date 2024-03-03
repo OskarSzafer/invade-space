@@ -13,5 +13,9 @@ public class PhysicsControllerEditor : Editor
         PhysicsSystem.gravitationalConstant = EditorGUILayout.FloatField("Gravitational Constant", PhysicsSystem.gravitationalConstant);
         PhysicsSystem.atmosphericDragConstant = EditorGUILayout.FloatField("Atmospheric Drag Constant", PhysicsSystem.atmosphericDragConstant);
 
+        PhysicsController physicsController = (PhysicsController)target;
+        physicsController.temporalGravitationalConstant = PhysicsSystem.gravitationalConstant;
+        physicsController.temporalAtmosphericDragConstant = PhysicsSystem.atmosphericDragConstant;
+    
     }
 }

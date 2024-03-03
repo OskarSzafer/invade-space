@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class PhysicsController : PhysicsSystem
 {
+    // temporal variables to overcome unity reseting static variables on play
+    [HideInInspector] public float temporalGravitationalConstant;
+    [HideInInspector] public float temporalAtmosphericDragConstant;
+
     void Awake()
     {
+        // initialize static variables
+        gravitationalConstant = temporalGravitationalConstant;
+        atmosphericDragConstant = temporalAtmosphericDragConstant;
+
+        // initialize PhisicsObjects
         PhisicsObjects = new Dictionary<string, List<GameObject>>();
 
         foreach (string option in optionList)

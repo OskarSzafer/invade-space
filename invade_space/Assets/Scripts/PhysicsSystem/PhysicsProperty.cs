@@ -47,7 +47,7 @@ public class PhysicsProperty : PhysicsSystem
 
     void OnEnable()
     {
-        StartCoroutine(WaitForControllerAndAdd());
+        StartCoroutine(WaitForController());
     }
 
     void OnDisable()
@@ -56,7 +56,7 @@ public class PhysicsProperty : PhysicsSystem
         PhisicsObjects[bodyType].Remove(gameObject);
     }
 
-    private IEnumerator WaitForControllerAndAdd()
+    private IEnumerator WaitForController()
     {
         // Wait until ControllerReady is true
         while (!ControllerReady)
@@ -152,7 +152,7 @@ public class PhysicsProperty : PhysicsSystem
         }
     }
 
-    internal void CollisionDetected()
+    internal void CollisionDetected() // called from PhysicsController
     {
         OnCollisionDetected?.Invoke();
     }

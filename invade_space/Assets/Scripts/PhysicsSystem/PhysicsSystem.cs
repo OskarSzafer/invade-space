@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class PhysicsSystem : MonoBehaviour
 {
-    [HideInInspector] public string[] optionList = new string[] { "Star", "Planet", "Moon", "Ship"};
+    [HideInInspector] public string[] optionList = new string[] { "Star", "Planet", "Moon", "Ship"}; // TODO: visible in inspector
     protected static Dictionary<string, List<GameObject>> PhisicsObjects;
     protected static bool ControllerReady = false;
-    [HideInInspector] public static float gravitationalConstant = 1.0f; // TODO, overlaps with inspector value, to fix
-    [HideInInspector] public static float atmosphericDragConstant = 10.0f; // TODO, overlaps with inspector value, to fix
+    [HideInInspector] public static float gravitationalConstant = 1.0f; // every time unity compiles, this value is reset to 1.0f TODO: fix this
+    [HideInInspector] public static float atmosphericDragConstant = 1.0f; // every time unity compiles, this value is reset to 1.0f TODO: fix this
 
     // Dependences
     // colomn - source
     // row - target
-    public bool[,] gravityDependences = new bool[4, 4]
+    public static bool[,] gravityDependences = new bool[4, 4]
     {
         {false, false, false, false},
         {true, false, false, false},
@@ -22,7 +22,7 @@ public class PhysicsSystem : MonoBehaviour
     };
 
     // collision dependences determine allso if atmospheric drag occurs
-    public bool[,] collisionDependences = new bool[4, 4]
+    public static bool[,] collisionDependences = new bool[4, 4]
     {
         {true, true, true, true},
         {true, true, true, true},
@@ -58,6 +58,3 @@ public class PhysicsSystem : MonoBehaviour
         return forceDirection * forceValue;
     }
 }
-
-//TODO:
-// - kept on orbit test for setting treshold
