@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5082675520563864579}
   - component: {fileID: 1287720922069732026}
   m_Layer: 0
-  m_Name: Planet
+  m_Name: GasPlanet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -26,8 +26,8 @@ public class Ship : MonoBehaviour
         
     }
 
-    protected void OnCollision() 
+    protected void OnCollision(GameObject collidedObject) 
     {
-        Debug.Log("BOOM!");
+        Debug.Log("BOOM! " + collidedObject.name);
     }
 }

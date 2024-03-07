@@ -29,7 +29,7 @@ public class PhysicsProperty : PhysicsSystem
     protected float keptOnOrbitForceThreshold;
     protected GameObject OrbitSource;
     // Collision delegate
-    public delegate void CollisionEventHandler();
+    public delegate void CollisionEventHandler(GameObject collidedObject);
     public event CollisionEventHandler OnCollisionDetected;
     // Controller synchronization
     private Coroutine WaitForControllerCoroutine;
@@ -164,9 +164,9 @@ public class PhysicsProperty : PhysicsSystem
         }
     }
 
-    internal void CollisionDetected() // called from PhysicsController
+    internal void CollisionDetected(GameObject collidedObject) // called from PhysicsController
     {
-        OnCollisionDetected?.Invoke();
+        OnCollisionDetected?.Invoke(collidedObject);
     }
 
     public void ApplyForce(Vector2 force)

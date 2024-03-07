@@ -106,11 +106,10 @@ public class PhysicsController : PhysicsSystem
         if (distance < radiusSum)
         {
             // collision occurs
-            target.GetComponent<PhysicsProperty>().CollisionDetected();
+            target.GetComponent<PhysicsProperty>().CollisionDetected(source);
         }
 
-        //float contactScale = (distance - radiusSum) / (atmosphereRadiusSum - radiusSum);
-        float contactScale = atmosphereRadiusSum - distance;//here
+        float contactScale = atmosphereRadiusSum - distance;
         Vector2 relativeVelocity = source.GetComponent<PhysicsProperty>().velocity - target.GetComponent<PhysicsProperty>().velocity;
         Vector2 force = relativeVelocity * contactScale * atmosphericDragConstant * Time.fixedDeltaTime; // delta time not necessary
 
