@@ -81,7 +81,7 @@ public class PhysicsController : PhysicsSystem
     private void ApplyGravity (GameObject target, GameObject source)
     {
         Vector2 force = GravityBetween(target, source);
-        target.GetComponent<PhysicsProperty>().ApplyForce(force * Time.deltaTime); // delta time not needed
+        target.GetComponent<PhysicsProperty>().ApplyForce(force * Time.fixedDeltaTime); // delta time not necessary
     }
 
     private void ApplyAtmosphericDragAndCollision (GameObject target, GameObject source)
@@ -94,7 +94,7 @@ public class PhysicsController : PhysicsSystem
         float sourceAtmosphereRadius = source.GetComponent<PhysicsProperty>().AtmosphereRadius;
         float atmosphereRadiusSum = targetAtmosphereRadius + sourceAtmosphereRadius;
 
-        if (distance > atmosphereRadiusSum)
+        if (distance >= atmosphereRadiusSum)
         {
             // no contact
             return;
@@ -105,17 +105,16 @@ public class PhysicsController : PhysicsSystem
 
         if (distance < radiusSum)
         {
-            // collision
+            // collision occurs
             target.GetComponent<PhysicsProperty>().CollisionDetected();
         }
 
-        // drag
-        float contactScale = (distance - radiusSum) / (atmosphereRadiusSum - radiusSum);
-        Vector2 relativeVelocity = target.GetComponent<PhysicsProperty>().velocity - source.GetComponent<PhysicsProperty>().velocity;
-        Vector2 force = relativeVelocity * atmosphericDragConstant * contactScale * Time.deltaTime; // delta time not needed
+        //float contactScale = (distance - radiusSum) / (atmosphereRadiusSum - radiusSum);
+        float contactScale = atmosphereRadiusSum - distance;//here
+        Vector2 relativeVelocity = source.GetComponent<PhysicsProperty>().velocity - target.GetComponent<PhysicsProperty>().velocity;
+        Vector2 force = relativeVelocity * contactScale * atmosphericDragConstant * Time.fixedDeltaTime; // delta time not necessary
 
         target.GetComponent<PhysicsProperty>().ApplyForce(force);
-        
     }
 }
 

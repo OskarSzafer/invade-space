@@ -20,7 +20,7 @@ public class PlayerShipController : Ship
     void Awake()
     {
         thruster = GameObject.Find("Thruster");
-        thrusterTransform = thruster.GetComponent<Transform>();
+        thrusterTransform = transform; //thruster.GetComponent<Transform>();
         thrusterParticleSystem = thruster.GetComponentInChildren<ParticleSystem>();
     }
 
@@ -65,7 +65,7 @@ public class PlayerShipController : Ship
             var emission = thrusterParticleSystem.emission;
             emission.enabled = true;
 
-            inputRotation = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg + 90.0f;
+            inputRotation = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg - 90.0f;
             float currentRotation = thrusterTransform.eulerAngles.z;
 
             float rotation = Mathf.DeltaAngle(currentRotation, inputRotation);
@@ -82,7 +82,7 @@ public class PlayerShipController : Ship
 
     protected void Thrust()
     {
-        Vector2 force = thrusterTransform.rotation * Vector2.down * thrustForce * Time.deltaTime;
+        Vector2 force = thrusterTransform.rotation * Vector2.down * thrustForce * Time.deltaTime * -1;
         physicsProperty.ApplyForce(force);
     }
 }

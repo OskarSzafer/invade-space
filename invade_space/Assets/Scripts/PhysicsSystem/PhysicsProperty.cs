@@ -31,6 +31,9 @@ public class PhysicsProperty : PhysicsSystem
     // Collision delegate
     public delegate void CollisionEventHandler();
     public event CollisionEventHandler OnCollisionDetected;
+    // Controller synchronization
+    private Coroutine WaitForControllerCoroutine;
+    private bool IsWaitForControllerRunning = false;
 
 
     void Awake()
@@ -47,17 +50,25 @@ public class PhysicsProperty : PhysicsSystem
 
     void OnEnable()
     {
-        StartCoroutine(WaitForController());
+        if (!IsWaitForControllerRunning){
+            WaitForControllerCoroutine = StartCoroutine(WaitForController());
+        }
     }
 
     void OnDisable()
     {
-        Debug.Log("OnDisable");
+        if (IsWaitForControllerRunning)
+        {
+            StopCoroutine(WaitForControllerCoroutine);
+            IsWaitForControllerRunning = false;
+        }
         PhisicsObjects[bodyType].Remove(gameObject);
     }
 
     private IEnumerator WaitForController()
     {
+        IsWaitForControllerRunning = true;
+
         // Wait until ControllerReady is true
         while (!ControllerReady)
         {
@@ -68,6 +79,7 @@ public class PhysicsProperty : PhysicsSystem
         {
             PhisicsObjects[bodyType].Add(gameObject);
         }
+        IsWaitForControllerRunning = false;
     }
 
     void Update()
@@ -85,7 +97,7 @@ public class PhysicsProperty : PhysicsSystem
     {
         if (keptOnOrbit)
         {
-            Vector2 GravitySourceForce = GravityBetween(gameObject, OrbitSource) * Time.deltaTime;
+            Vector2 GravitySourceForce = GravityBetween(gameObject, OrbitSource) * Time.fixedDeltaTime;
             float drift = (GravitySourceForce - netForce).magnitude;
             if (drift > keptOnOrbitForceThreshold)
             {
@@ -105,8 +117,8 @@ public class PhysicsProperty : PhysicsSystem
     private void MoveByVelocity()
     {
         Vector2 position = transform.position;
-        position.x = position.x + velocity.x * Time.deltaTime; // delta time not needed
-        position.y = position.y + velocity.y * Time.deltaTime; // delta time not needed
+        position.x = position.x + velocity.x * Time.fixedDeltaTime; // delta time not necessary
+        position.y = position.y + velocity.y * Time.fixedDeltaTime; // delta time not necessary
         transform.position = position;
     }
 
@@ -176,16 +188,32 @@ public class PhysicsProperty : PhysicsSystem
         velocity = orbitalVelocity;
     }
 
-    public void KeepOnOrbit(GameObject source = null, float accelerationThreshold = 1.0f)
+    public void KeepOnOrbit(
+        GameObject source = null,
+        float gravityFractionThreshold = 0.5f, 
+        float accelerationThreshold = 0.0f, 
+        float forceThreshold = 0.0f)
     {
         // body ignore forces other then gravity of target, until threshold is reached
+        // to prevent it from slowly drifting from orbit
 
         if (source == null) keptOnOrbit = false;
         else
         {   
-            keptOnOrbitForceThreshold = accelerationThreshold * Mass;
+            if (forceThreshold != 0.0f)
+            {
+                keptOnOrbitForceThreshold = forceThreshold;
+            }
+            else if (accelerationThreshold != 0.0f)
+            { 
+                keptOnOrbitForceThreshold = accelerationThreshold * Mass;
+            }
+            else
+            {
+                keptOnOrbitForceThreshold = GravityBetween(gameObject, source).magnitude * Time.fixedDeltaTime * gravityFractionThreshold;
+            }
 
-            Vector2 GravitySourceForce = GravityBetween(gameObject, source) * Time.deltaTime;
+            Vector2 GravitySourceForce = GravityBetween(gameObject, source) * Time.fixedDeltaTime;
             float drift = (GravitySourceForce - netForce).magnitude;
             if (drift > keptOnOrbitForceThreshold)
             {
