@@ -19,7 +19,7 @@ public class PlayerShipController : Ship
     // Awake is called before the first frame update
     void Awake()
     {
-        thruster = GameObject.Find("Thruster");
+        thruster = transform.Find("Thruster").gameObject;
         thrusterTransform = transform; //thruster.GetComponent<Transform>();
         thrusterParticleSystem = thruster.GetComponentInChildren<ParticleSystem>();
     }

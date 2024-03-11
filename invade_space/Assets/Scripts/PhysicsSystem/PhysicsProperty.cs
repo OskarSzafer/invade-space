@@ -63,6 +63,7 @@ public class PhysicsProperty : PhysicsSystem
             IsWaitForControllerRunning = false;
         }
         PhisicsObjects[bodyType].Remove(gameObject);
+        Debug.Log("Removed " + gameObject.name + " from " + bodyType);
     }
 
     private IEnumerator WaitForController()
@@ -122,6 +123,8 @@ public class PhysicsProperty : PhysicsSystem
         transform.position = position;
     }
 
+    // returns nearest gravity source of given type
+    // if no type is given, returns nearest gravity source affecting this object
     public GameObject NearestGravitySource(string[] types = null)
     {
         Vector3 position = gameObject.transform.position;
@@ -188,14 +191,14 @@ public class PhysicsProperty : PhysicsSystem
         velocity = orbitalVelocity;
     }
 
+    // body ignore forces other then gravity of target, until threshold is reached
+    // to prevent it from slowly drifting from orbit
     public void KeepOnOrbit(
         GameObject source = null,
         float gravityFractionThreshold = 0.5f, 
         float accelerationThreshold = 0.0f, 
         float forceThreshold = 0.0f)
     {
-        // body ignore forces other then gravity of target, until threshold is reached
-        // to prevent it from slowly drifting from orbit
 
         if (source == null) keptOnOrbit = false;
         else
@@ -225,5 +228,34 @@ public class PhysicsProperty : PhysicsSystem
                 OrbitSource = source;
             }
         }
+    }
+
+    public GameObject GetOrbitSource()
+    {
+        return OrbitSource;
+    }
+
+    // merge two physics bodies
+    public void Merge(GameObject target, string type = "", bool destroyTarget = false, bool changeRadius = true)
+    {
+        PhysicsProperty targetPhysicsProperty = target.GetComponent<PhysicsProperty>();
+
+        string mergedType = (type == "") ? bodyType : type;
+        float targetMass = mass + targetPhysicsProperty.Mass;
+        Vector2 targetVelocity = (mass * velocity + targetPhysicsProperty.Mass * targetPhysicsProperty.velocity) / targetMass;
+
+        if (changeRadius)
+        {
+            float targetRadius = sqrt(gameObject.transform.sca); // TODO: calculate
+            float targetAtmosphereRadius = 0.0f; // TODO: calculate
+        }
+
+        //destroy gameObject and target
+        //create new object with merged properties
+        //return new object
+
+
+
+        return null; // TODO: return new object
     }
 }
