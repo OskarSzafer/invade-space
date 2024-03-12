@@ -14,6 +14,7 @@ public class PhysicsProperty : PhysicsSystem
     [HideInInspector] public string bodyType;
     
     // BODY PROPERTIES
+    [SerializeField] protected bool physicsEnabeled = true;
     [SerializeField] protected float mass;
     public float Mass { get { return mass; } set { mass = (mass == 0) ? 1 : mass; } }
     [SerializeField] protected float radius;
@@ -31,9 +32,6 @@ public class PhysicsProperty : PhysicsSystem
     // Collision delegate
     public delegate void CollisionEventHandler(GameObject collidedObject);
     public event CollisionEventHandler OnCollisionDetected;
-    // Controller synchronization
-    private Coroutine WaitForControllerCoroutine;
-    private bool IsWaitForControllerRunning = false;
 
 
     void Awake()
@@ -50,37 +48,23 @@ public class PhysicsProperty : PhysicsSystem
 
     void OnEnable()
     {
-        if (!IsWaitForControllerRunning){
-            WaitForControllerCoroutine = StartCoroutine(WaitForController());
-        }
+        StartCoroutine(EnablePhysicsBody());
     }
 
-    void OnDisable()
+    // ensures that physicsController is awake
+    private IEnumerator EnablePhysicsBody()
     {
-        if (IsWaitForControllerRunning)
-        {
-            StopCoroutine(WaitForControllerCoroutine);
-            IsWaitForControllerRunning = false;
-        }
-        PhisicsObjects[bodyType].Remove(gameObject);
-        Debug.Log("Removed " + gameObject.name + " from " + bodyType);
-    }
-
-    private IEnumerator WaitForController()
-    {
-        IsWaitForControllerRunning = true;
-
-        // Wait until ControllerReady is true
-        while (!ControllerReady)
+        while (physicsController == null)
         {
             yield return null;
         }
 
-        if(!PhisicsObjects[bodyType].Contains(gameObject))
-        {
-            PhisicsObjects[bodyType].Add(gameObject);
-        }
-        IsWaitForControllerRunning = false;
+        physicsController.changeBodyStatus(gameObject, true);
+    }
+
+    void OnDisable()
+    {
+        physicsController.changeBodyStatus(gameObject, false);
     }
 
     void Update()
@@ -89,8 +73,11 @@ public class PhysicsProperty : PhysicsSystem
     }
 
     void FixedUpdate()
-    {
-        CalculateVelocity();
+    {   
+        if (physicsEnabeled)
+        {
+            CalculateVelocity();
+        }
         MoveByVelocity();
     }
 
@@ -169,17 +156,48 @@ public class PhysicsProperty : PhysicsSystem
 
     internal void CollisionDetected(GameObject collidedObject) // called from PhysicsController
     {
+        if (!physicsEnabeled) return;
+
         OnCollisionDetected?.Invoke(collidedObject);
     }
 
     public void ApplyForce(Vector2 force)
     {
         // applyed force should be multiplied by time
+        // if (!physicsEnabeled) return; dont needed because of check in FixedUpdate
         netForce += force;
+    }
+
+    public void changeBodyType(string newType)
+    {
+        bodyType = newType;
+        bodyTypeIndex = System.Array.IndexOf(optionList, bodyType);
+        physicsController.changeBodyStatus(gameObject, true);
+    }
+
+    public void changeBodyType(int newTypeIndex)
+    {
+        bodyTypeIndex = newTypeIndex;
+        bodyType = optionList[bodyTypeIndex];
+        physicsController.changeBodyStatus(gameObject, true);
+    }
+
+    public void disablePhysics()
+    {
+        physicsEnabeled = false;
+        OnDisable();
+    }
+
+    public void enablePhysics()
+    {
+        physicsEnabeled = true;
+        OnEnable();
     }
 
     public void SetOnOrbit(GameObject target)
     {
+        if (!physicsEnabeled) return;
+
         Vector2 forceDirection = target.transform.position - transform.position;
         float distance = Vector2.Distance(target.transform.position, transform.position);
 
@@ -199,6 +217,7 @@ public class PhysicsProperty : PhysicsSystem
         float accelerationThreshold = 0.0f, 
         float forceThreshold = 0.0f)
     {
+        if (!physicsEnabeled) return;
 
         if (source == null) keptOnOrbit = false;
         else
@@ -238,24 +257,37 @@ public class PhysicsProperty : PhysicsSystem
     // merge two physics bodies
     public void Merge(GameObject target, string type = "", bool destroyTarget = false, bool changeRadius = true)
     {
+        if (!physicsEnabeled) return;
+
         PhysicsProperty targetPhysicsProperty = target.GetComponent<PhysicsProperty>();
 
-        string mergedType = (type == "") ? bodyType : type;
-        float targetMass = mass + targetPhysicsProperty.Mass;
-        Vector2 targetVelocity = (mass * velocity + targetPhysicsProperty.Mass * targetPhysicsProperty.velocity) / targetMass;
+        float mergedMass = mass + targetPhysicsProperty.Mass;
+        Vector2 mergedVelocity = (mass * velocity + targetPhysicsProperty.Mass * targetPhysicsProperty.velocity) / mergedMass;
+
+        float mergedRadius = radius;
+        float mergedAtmosphereRadius = atmosphereRadius;
 
         if (changeRadius)
         {
-            float targetRadius = sqrt(gameObject.transform.sca); // TODO: calculate
-            float targetAtmosphereRadius = 0.0f; // TODO: calculate
+            mergedRadius = Mathf.Sqrt(Mathf.Pow(radius, 2) + Mathf.Pow(targetPhysicsProperty.radius, 2));
+            Debug.Log("Merged radius: " + mergedRadius);
+            mergedAtmosphereRadius = Mathf.Sqrt(Mathf.Pow(atmosphereRadius, 2) + Mathf.Pow(targetPhysicsProperty.atmosphereRadius, 2));
+            Debug.Log("Merged atmosphere radius: " + mergedAtmosphereRadius);
         }
 
-        //destroy gameObject and target
-        //create new object with merged properties
-        //return new object
+        if (destroyTarget)
+        {
+            Destroy(target);
+        }
 
+        if (type != "")
+        {
+            changeBodyType(type);         
+        }
 
-
-        return null; // TODO: return new object
+        mass = mergedMass;
+        radius = mergedRadius;
+        atmosphereRadius = mergedAtmosphereRadius;
+        velocity = mergedVelocity;
     }
 }

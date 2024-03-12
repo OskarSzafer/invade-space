@@ -18,7 +18,7 @@ public class CelestialBody : MonoBehaviour
         physicsProperty = GetComponent<PhysicsProperty>();
         explosionObject = transform.Find("Explosion").gameObject;
         explosionParticleSystem = explosionObject.GetComponent<ParticleSystem>();
-        atmosphereObject = transform.Find("Atmosphere").gameObject;
+        atmosphereObject = transform.Find("AtmosphereObject").gameObject;
 
         // Collision delegate - functions called when collision detected
         physicsProperty.OnCollisionDetected += OnCollision;
@@ -33,7 +33,7 @@ public class CelestialBody : MonoBehaviour
     protected void OnCollision(GameObject collidedObject) 
     {
         Debug.Log(gameObject.name + "collided with: " + collidedObject.name);
-        DestroyBody();
+        MergeBody(collidedObject);
     }
 
     public void DestroyBody()
@@ -44,8 +44,14 @@ public class CelestialBody : MonoBehaviour
 
     public void MergeBody(GameObject collidedObject)
     {
+        Debug.Log(gameObject.name + "merged with: " + collidedObject.name);
         physicsProperty.Merge(collidedObject);
-        gameObject.transform.localScale = new Vector3(physicsProperty.Radius*2, physicsProperty.Radius*2, 1);
-        
+        collidedObject.GetComponent<PhysicsProperty>().disablePhysics();
+
+        float newScale = physicsProperty.Radius * 2;
+        gameObject.transform.localScale = new Vector3(newScale, newScale, 1);
+        atmosphereObject.transform.localScale = new Vector3(physicsProperty.AtmosphereRadius/newScale, physicsProperty.AtmosphereRadius/newScale, 1);
+
+        collidedObject.GetComponent<CelestialBody>().DestroyBody();
     }
 }

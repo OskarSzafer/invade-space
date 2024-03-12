@@ -13,6 +13,7 @@ public class PhysicsController : PhysicsSystem
         // initialize static variables
         gravitationalConstant = temporalGravitationalConstant;
         atmosphericDragConstant = temporalAtmosphericDragConstant;
+        physicsController = this;
 
         // initialize PhisicsObjects
         PhisicsObjects = new Dictionary<string, List<GameObject>>();
@@ -44,6 +45,8 @@ public class PhysicsController : PhysicsSystem
 
     private void ForPairOfBodyTypes()
     {
+        ControllerReady = false; // to avoid errors when objects are added or removed during iteration over PhisicsObjects
+
         for (int i = 0; i < optionList.Length; i++)
         {
             for (int j = 0; j < optionList.Length; j++)
@@ -53,6 +56,8 @@ public class PhysicsController : PhysicsSystem
 
             }
         }
+
+        ControllerReady = true;
     }
 
     private void ForPairOfBodies(List<GameObject> targets, List<GameObject> sources, int i, int j)
@@ -114,6 +119,41 @@ public class PhysicsController : PhysicsSystem
         Vector2 force = relativeVelocity * contactScale * atmosphericDragConstant * Time.fixedDeltaTime; // delta time not necessary
 
         target.GetComponent<PhysicsProperty>().ApplyForce(force);
+    }
+
+
+    // used to set body as active or inactive and update body type
+    public void changeBodyStatus(GameObject body, bool bodyIsActive)
+    {
+        StartCoroutine(EditPhisicsObjects(body, bodyIsActive));
+    }
+
+    // used to edit PhisicsObjects dictionary
+    private IEnumerator EditPhisicsObjects(GameObject body, bool bodyIsActive)
+    {
+        // Wait until ControllerReady is true
+        while (!ControllerReady)
+        {
+            yield return null;
+        }
+
+        // Remove object from PhisicsObjects, if it is present
+        foreach (string type in optionList)
+        {
+            if (PhisicsObjects[type].Contains(body))
+            {
+                PhisicsObjects[type].Remove(body);
+                Debug.Log("Removed " + body.name + " from " + type);
+            }
+        }
+
+        // Add object to PhisicsObjects, if it is active
+        if (bodyIsActive)
+        {
+            string bodyType = body.GetComponent<PhysicsProperty>().bodyType;
+            PhisicsObjects[bodyType].Add(body);
+            Debug.Log("Added " + body.name + " to " + bodyType);
+        }
     }
 }
 

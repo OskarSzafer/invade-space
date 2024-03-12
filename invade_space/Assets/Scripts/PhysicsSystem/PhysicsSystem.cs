@@ -7,16 +7,17 @@ public class PhysicsSystem : MonoBehaviour
     [HideInInspector] public string[] optionList = new string[] { "Star", "Planet", "Moon", "Ship"}; // TODO: visible in inspector
     protected static Dictionary<string, List<GameObject>> PhisicsObjects;
     protected static bool ControllerReady = false;
-    [HideInInspector] public static float gravitationalConstant = 1.0f; // every time unity compiles, this value is reset to 1.0f TODO: fix this
-    [HideInInspector] public static float atmosphericDragConstant = 1.0f; // every time unity compiles, this value is reset to 1.0f TODO: fix this
-
+    [HideInInspector] public static float gravitationalConstant = 1.0f;
+    [HideInInspector] public static float atmosphericDragConstant = 1.0f;
+    protected static PhysicsController physicsController;
+    
     // Dependences
     // colomn - source
     // row - target
     public static bool[,] gravityDependences = new bool[4, 4]
     {
         {false, false, false, false},
-        {true, false, false, false},
+        {true, true, false, false},
         {true, true, false, false},
         {true, true, true, false}
     };
@@ -43,9 +44,9 @@ public class PhysicsSystem : MonoBehaviour
 
     }
 
-    protected Vector2 GravityBetween(GameObject target, GameObject source)
+    // calculate gravity force between two objects
+    public Vector2 GravityBetween(GameObject target, GameObject source)
     {
-        // calculate gravity force between two objects, even if disabled
         if (source == target) return Vector2.zero;
         
         Vector2 forceDirection = source.transform.position - target.transform.position;
@@ -58,3 +59,5 @@ public class PhysicsSystem : MonoBehaviour
         return forceDirection * forceValue;
     }
 }
+
+// TODO: in controller dont reper GetComponent<PhysicsProperty>
