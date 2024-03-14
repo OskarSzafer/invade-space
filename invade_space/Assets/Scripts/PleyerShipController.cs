@@ -11,7 +11,6 @@ public class PlayerShipController : Ship
 
     // THRUSTER
     protected GameObject thruster;
-    protected Transform thrusterTransform;
     // protected Vector2 thrustDirection;
     protected ParticleSystem thrusterParticleSystem;
 
@@ -20,7 +19,6 @@ public class PlayerShipController : Ship
     void Awake()
     {
         thruster = transform.Find("Thruster").gameObject;
-        thrusterTransform = transform; //thruster.GetComponent<Transform>();
         thrusterParticleSystem = thruster.GetComponentInChildren<ParticleSystem>();
     }
 
@@ -33,17 +31,20 @@ public class PlayerShipController : Ship
     // Update is called once per frame
     void Update()
     {
+        // Steering INPUT
         input.x = Input.GetAxis("Horizontal");
         input.y = Input.GetAxis("Vertical");
-        inputThrust = input.magnitude;
-        input.Normalize();
 
-        ThrustControll();
-        
-        if (inputThrust > 0)
-        {
-            Thrust();
+        inputThrust = input.magnitude;
+
+        if (inputThrust > 0.5f){
+            inputRotation = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg - 90.0f;
         }
+        else
+        {
+            inputRotation = transform.eulerAngles.z;
+        }
+
 
         // INPUT
         if (Input.GetKeyDown(KeyCode.F)) //orbit nearest celestial body
@@ -52,26 +53,38 @@ public class PlayerShipController : Ship
             physicsProperty.SetOnOrbit(source);
             physicsProperty.KeepOnOrbit(source);
         }
+
+
+        // Control
+        Thrust(Input.GetKey("space"));
+        RotationControll();
     }
 
 
-    protected void ThrustControll()
+    // rotate gameObject to inputRotation, with speed of rotationRate
+    protected void RotationControll()
     {
         float rotationAmount = rotationRate * Time.deltaTime;
+        float currentRotation = transform.eulerAngles.z;
 
-        // turn the thruster on or off
-        if (inputThrust > 0)
+        float rotation = Mathf.DeltaAngle(currentRotation, inputRotation);
+        rotation = Mathf.Clamp(rotation, -rotationAmount, rotationAmount);
+
+        transform.rotation = Quaternion.Euler(0, 0, currentRotation + rotation);
+    }
+
+    // apply force and handle thruster particle system
+    protected void Thrust(bool thrusterActice)
+    {
+        if (thrusterActice)
         {
             var emission = thrusterParticleSystem.emission;
             emission.enabled = true;
 
-            inputRotation = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg - 90.0f;
-            float currentRotation = thrusterTransform.eulerAngles.z;
+            // RotationControll();
 
-            float rotation = Mathf.DeltaAngle(currentRotation, inputRotation);
-            rotation = Mathf.Clamp(rotation, -rotationAmount, rotationAmount);
-
-            thrusterTransform.rotation = Quaternion.Euler(0, 0, currentRotation + rotation);
+            Vector2 force = transform.rotation * Vector2.down * thrustForce * Time.deltaTime * -1;
+            physicsProperty.ApplyForce(force);
         }
         else
         {
@@ -79,14 +92,7 @@ public class PlayerShipController : Ship
             emission.enabled = false;
         }
     }
-
-    protected void Thrust()
-    {
-        Vector2 force = thrusterTransform.rotation * Vector2.down * thrustForce * Time.deltaTime * -1;
-        physicsProperty.ApplyForce(force);
-    }
 }
 
 // TODO:
-// - add manual rotation
 // - set on orbit works only for if alredy in aproximate velocity

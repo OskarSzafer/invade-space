@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CelestialBody : MonoBehaviour
 {
-    // body physics property
+    // physics property
     protected PhysicsProperty physicsProperty;
-    // body particle system
+    // particle system object
     protected GameObject explosionObject;
     protected ParticleSystem explosionParticleSystem;
-    // body atmosphere object
+    // atmosphere object
     protected GameObject atmosphereObject;
 
     // Start is called before the first frame update
@@ -32,7 +32,7 @@ public class CelestialBody : MonoBehaviour
 
     protected void OnCollision(GameObject collidedObject) 
     {
-        Debug.Log(gameObject.name + "collided with: " + collidedObject.name);
+        Debug.Log(gameObject.name + " collided with: " + collidedObject.name);
         MergeBody(collidedObject);
     }
 
@@ -50,7 +50,7 @@ public class CelestialBody : MonoBehaviour
         if (physicsProperty.bodyTypeIndex > collidedObjectPhysicsProperty.bodyTypeIndex) return;
         if (collidedObjectPhysicsProperty.bodyType == "Ship") return;
 
-        Debug.Log(gameObject.name + "merged with: " + collidedObject.name);
+        Debug.Log(gameObject.name + " merged with: " + collidedObject.name);
         physicsProperty.Merge(collidedObject);
         collidedObjectPhysicsProperty.disablePhysics();
 

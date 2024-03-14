@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1287720922069732026, guid: 7feae746d6b2887439e66c4789705461, type: 3}
+      propertyPath: mass
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 8383520619116863224, guid: 7feae746d6b2887439e66c4789705461, type: 3}
       propertyPath: m_Name
       value: GasPlanet (1)
@@ -232,6 +236,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Star
       objectReference: {fileID: 0}
+    - target: {fileID: 8383520619116863224, guid: 51792e0e13025524c8a0b44d5fee6ccd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -251,11 +259,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5283939084941509926, guid: 05a75183b81b8d24e8d51e71ac7ec88b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 54.47972
+      value: 102
       objectReference: {fileID: 0}
     - target: {fileID: 5283939084941509926, guid: 05a75183b81b8d24e8d51e71ac7ec88b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 31.62832
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 5283939084941509926, guid: 05a75183b81b8d24e8d51e71ac7ec88b, type: 3}
       propertyPath: m_LocalPosition.z

@@ -267,16 +267,30 @@ public class PhysicsProperty : PhysicsSystem
         float mergedMass = mass + targetPhysicsProperty.Mass;
         Vector2 mergedVelocity = (mass * velocity + targetPhysicsProperty.Mass * targetPhysicsProperty.velocity) / mergedMass;
 
-        float mergedRadius = radius;
-        float mergedAtmosphereRadius = atmosphereRadius;
+        float mergedRadius = radius; //tmp
+        float mergedAtmosphereRadius = atmosphereRadius; // tmp
 
         Vector2 newPosition = transform.position;
         
+        // change radius based on two previous radiuses
+        // if (changeRadius)
+        // {
+        //     mergedRadius = Mathf.Sqrt(Mathf.Pow(radius, 2) + Mathf.Pow(targetPhysicsProperty.radius, 2));
+        //     Debug.Log("Merged radius: " + mergedRadius);
+        //     mergedAtmosphereRadius = Mathf.Sqrt(Mathf.Pow(atmosphereRadius, 2) + Mathf.Pow(targetPhysicsProperty.atmosphereRadius, 2));
+        //     Debug.Log("Merged atmosphere radius: " + mergedAtmosphereRadius);
+        // }
+
+        // change radius based on previous atmosphere radius and mass change
         if (changeRadius)
         {
-            mergedRadius = Mathf.Sqrt(Mathf.Pow(radius, 2) + Mathf.Pow(targetPhysicsProperty.radius, 2));
+            // M/R^2 = u
+            // m/r = M/R^2
+            // M * r^2 / m = R^2 
+            // R = sqrt(M * r^2 / m)
+            mergedRadius = radius * Mathf.Sqrt(mergedMass / mass);
             Debug.Log("Merged radius: " + mergedRadius);
-            mergedAtmosphereRadius = Mathf.Sqrt(Mathf.Pow(atmosphereRadius, 2) + Mathf.Pow(targetPhysicsProperty.atmosphereRadius, 2));
+            mergedAtmosphereRadius = atmosphereRadius * Mathf.Sqrt(mergedMass / mass);
             Debug.Log("Merged atmosphere radius: " + mergedAtmosphereRadius);
         }
 
