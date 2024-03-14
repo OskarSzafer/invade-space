@@ -4899,7 +4899,7 @@ GameObject:
   - component: {fileID: 5898911957116231358}
   - component: {fileID: 5900503615006474000}
   m_Layer: 0
-  m_Name: AtmosphereSprite
+  m_Name: AtmosphereObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5079,6 +5079,7 @@ MonoBehaviour:
   - Ship
   bodyTypeIndex: 0
   bodyType: Star
+  physicsEnabeled: 1
   mass: 10000
   radius: 50
   atmosphereRadius: 75

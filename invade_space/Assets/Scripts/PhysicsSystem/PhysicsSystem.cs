@@ -59,5 +59,3 @@ public class PhysicsSystem : MonoBehaviour
         return forceDirection * forceValue;
     }
 }
-
-// TODO: in controller dont reper GetComponent<PhysicsProperty>

@@ -64,7 +64,10 @@ public class PhysicsProperty : PhysicsSystem
 
     void OnDisable()
     {
-        physicsController.changeBodyStatus(gameObject, false);
+        if (physicsController != null)
+        {
+            physicsController.changeBodyStatus(gameObject, false);
+        }
     }
 
     void Update()
@@ -255,7 +258,7 @@ public class PhysicsProperty : PhysicsSystem
     }
 
     // merge two physics bodies
-    public void Merge(GameObject target, string type = "", bool destroyTarget = false, bool changeRadius = true)
+    public void Merge(GameObject target, string type = "", bool destroyTarget = false, bool changeRadius = true, bool changePosition = true)
     {
         if (!physicsEnabeled) return;
 
@@ -267,12 +270,19 @@ public class PhysicsProperty : PhysicsSystem
         float mergedRadius = radius;
         float mergedAtmosphereRadius = atmosphereRadius;
 
+        Vector2 newPosition = transform.position;
+        
         if (changeRadius)
         {
             mergedRadius = Mathf.Sqrt(Mathf.Pow(radius, 2) + Mathf.Pow(targetPhysicsProperty.radius, 2));
             Debug.Log("Merged radius: " + mergedRadius);
             mergedAtmosphereRadius = Mathf.Sqrt(Mathf.Pow(atmosphereRadius, 2) + Mathf.Pow(targetPhysicsProperty.atmosphereRadius, 2));
             Debug.Log("Merged atmosphere radius: " + mergedAtmosphereRadius);
+        }
+
+        if (changePosition)
+        {
+            newPosition = (transform.position * mass + target.transform.position * targetPhysicsProperty.Mass)/mergedMass;
         }
 
         if (destroyTarget)
@@ -286,8 +296,9 @@ public class PhysicsProperty : PhysicsSystem
         }
 
         mass = mergedMass;
+        velocity = mergedVelocity;
+        transform.position = newPosition;
         radius = mergedRadius;
         atmosphereRadius = mergedAtmosphereRadius;
-        velocity = mergedVelocity;
     }
 }

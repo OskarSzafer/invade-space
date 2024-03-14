@@ -92,11 +92,16 @@ public class PhysicsController : PhysicsSystem
     private void ApplyAtmosphericDragAndCollision (GameObject target, GameObject source)
     {
         // drag and collision merged for optimization
+        
+        // get physics property for entities
+        PhysicsProperty targetPhysicsProperty = target.GetComponent<PhysicsProperty>();
+        PhysicsProperty sourcePhysicsProperty = source.GetComponent<PhysicsProperty>();
+
         Vector2 targetPosition = target.transform.position;
         Vector2 sourcePosition = source.transform.position;
         float distance = Vector2.Distance(targetPosition, sourcePosition);
-        float targetAtmosphereRadius = target.GetComponent<PhysicsProperty>().AtmosphereRadius;
-        float sourceAtmosphereRadius = source.GetComponent<PhysicsProperty>().AtmosphereRadius;
+        float targetAtmosphereRadius = targetPhysicsProperty.AtmosphereRadius;
+        float sourceAtmosphereRadius = sourcePhysicsProperty.AtmosphereRadius;
         float atmosphereRadiusSum = targetAtmosphereRadius + sourceAtmosphereRadius;
 
         if (distance >= atmosphereRadiusSum)
@@ -106,19 +111,19 @@ public class PhysicsController : PhysicsSystem
         }
 
         // collision detection
-        float radiusSum = target.GetComponent<PhysicsProperty>().Radius + source.GetComponent<PhysicsProperty>().Radius;
+        float radiusSum = targetPhysicsProperty.Radius + sourcePhysicsProperty.Radius;
 
         if (distance < radiusSum)
         {
             // collision occurs
-            target.GetComponent<PhysicsProperty>().CollisionDetected(source);
+            targetPhysicsProperty.CollisionDetected(source);
         }
 
         float contactScale = atmosphereRadiusSum - distance;
-        Vector2 relativeVelocity = source.GetComponent<PhysicsProperty>().velocity - target.GetComponent<PhysicsProperty>().velocity;
+        Vector2 relativeVelocity = sourcePhysicsProperty.velocity - targetPhysicsProperty.velocity;
         Vector2 force = relativeVelocity * contactScale * atmosphericDragConstant * Time.fixedDeltaTime; // delta time not necessary
 
-        target.GetComponent<PhysicsProperty>().ApplyForce(force);
+        targetPhysicsProperty.ApplyForce(force);
     }
 
 

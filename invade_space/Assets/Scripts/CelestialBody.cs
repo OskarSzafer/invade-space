@@ -44,13 +44,20 @@ public class CelestialBody : MonoBehaviour
 
     public void MergeBody(GameObject collidedObject)
     {
+        PhysicsProperty collidedObjectPhysicsProperty = collidedObject.GetComponent<PhysicsProperty>();
+
+        // respect hierarchy of celestial bodies
+        if (physicsProperty.bodyTypeIndex > collidedObjectPhysicsProperty.bodyTypeIndex) return;
+        if (collidedObjectPhysicsProperty.bodyType == "Ship") return;
+
         Debug.Log(gameObject.name + "merged with: " + collidedObject.name);
         physicsProperty.Merge(collidedObject);
-        collidedObject.GetComponent<PhysicsProperty>().disablePhysics();
+        collidedObjectPhysicsProperty.disablePhysics();
 
         float newScale = physicsProperty.Radius * 2;
         gameObject.transform.localScale = new Vector3(newScale, newScale, 1);
-        atmosphereObject.transform.localScale = new Vector3(physicsProperty.AtmosphereRadius/newScale, physicsProperty.AtmosphereRadius/newScale, 1);
+        float newAtmosphereScele = physicsProperty.AtmosphereRadius/physicsProperty.Radius;
+        atmosphereObject.transform.localScale = new Vector3(newAtmosphereScele, newAtmosphereScele, 1);
 
         collidedObject.GetComponent<CelestialBody>().DestroyBody();
     }
