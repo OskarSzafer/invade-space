@@ -5,29 +5,42 @@ using UnityEngine;
 public class CelestialBody : MonoBehaviour
 {
     // physics property
-    protected PhysicsProperty physicsProperty;
+    [SerializeField] protected PhysicsProperty physicsProperty;
     // particle system object
-    protected GameObject explosionObject;
-    protected ParticleSystem explosionParticleSystem;
+    [SerializeField] protected GameObject explosionObject;
+    [SerializeField] protected ParticleSystem explosionParticleSystem;
     // atmosphere object
-    protected GameObject atmosphereObject;
+    [SerializeField] protected GameObject atmosphereObject;
 
     // Start is called before the first frame update
     void Start()
     {
+        // disabeled beacause of the Instantiate initialization order conflict
+        /*
         physicsProperty = GetComponent<PhysicsProperty>();
         explosionObject = transform.Find("Explosion").gameObject;
         explosionParticleSystem = explosionObject.GetComponent<ParticleSystem>();
         atmosphereObject = transform.Find("AtmosphereObject").gameObject;
+        */
 
         // Collision delegate - functions called when collision detected
         physicsProperty.OnCollisionDetected += OnCollision;
     }
 
+
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+
+    public void updateSpritesScale()
+    {
+        float newScale = physicsProperty.Radius * 2;
+        gameObject.transform.localScale = new Vector3(newScale, newScale, 1);
+        float newAtmosphereScele = physicsProperty.AtmosphereRadius/physicsProperty.Radius;
+        atmosphereObject.transform.localScale = new Vector3(newAtmosphereScele, newAtmosphereScele, 1);
     }
 
     protected void OnCollision(GameObject collidedObject) 

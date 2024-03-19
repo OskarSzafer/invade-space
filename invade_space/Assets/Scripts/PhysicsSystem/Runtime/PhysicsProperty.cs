@@ -9,18 +9,18 @@ using System.Runtime.CompilerServices;
 public class PhysicsProperty : PhysicsSystem
 {
 
-    // CELESTIAL BODY PROPERTIES
+    // TYPE
     [HideInInspector] public int bodyTypeIndex = 0;
     [HideInInspector] public string bodyType;
     
     // BODY PROPERTIES
-    [SerializeField] protected bool physicsEnabeled = true;
+    [SerializeField] protected bool physicsEnabled = true;
     [SerializeField] protected float mass;
-    public float Mass { get { return mass; } set { mass = (mass == 0) ? 1 : mass; } }
+    public float Mass { get { return mass; } set { mass = (value == 0) ? 1 : value; } }
     [SerializeField] protected float radius;
-    public float Radius { get { return radius; } set { radius = (radius == 0) ? transform.localScale.x / 2 : radius; } }
+    public float Radius { get { return radius; } set { radius = (value == 0) ? transform.localScale.x / 2 : value; } }
     [SerializeField] protected float atmosphereRadius;
-    public float AtmosphereRadius { get { return atmosphereRadius; } set { atmosphereRadius = (atmosphereRadius < radius) ? radius : atmosphereRadius; } }
+    public float AtmosphereRadius { get { return atmosphereRadius; } set { atmosphereRadius = (value < radius) ? radius : value; } }
     [SerializeField] public Vector2 velocity = Vector2.zero;
     
     // RUNTIME VARIABLES
@@ -77,7 +77,7 @@ public class PhysicsProperty : PhysicsSystem
 
     void FixedUpdate()
     {   
-        if (physicsEnabeled)
+        if (physicsEnabled)
         {
             CalculateVelocity();
         }
@@ -114,7 +114,7 @@ public class PhysicsProperty : PhysicsSystem
     }
 
     // returns nearest gravity source of given type
-    // if no type is given, returns nearest gravity source affecting this object
+    // if no type is provided , returns nearest gravity source affecting this object
     public GameObject NearestGravitySource(string[] types = null)
     {
         Vector3 position = gameObject.transform.position;
@@ -142,7 +142,8 @@ public class PhysicsProperty : PhysicsSystem
         return nearestSource;
     }
 
-    private void NearestObject(string type, ref GameObject nearestObject, ref float nearestDistance) // for NearestGravitySource use
+    // for use of NearestGravitySource
+    private void NearestObject(string type, ref GameObject nearestObject, ref float nearestDistance)
     {
         Vector3 position = gameObject.transform.position;
 
@@ -157,9 +158,10 @@ public class PhysicsProperty : PhysicsSystem
         }
     }
 
-    internal void CollisionDetected(GameObject collidedObject) // called from PhysicsController
+    // called by PhysicsController
+    internal void CollisionDetected(GameObject collidedObject)
     {
-        if (!physicsEnabeled) return;
+        if (!physicsEnabled) return;
 
         OnCollisionDetected?.Invoke(collidedObject);
     }
@@ -167,7 +169,7 @@ public class PhysicsProperty : PhysicsSystem
     public void ApplyForce(Vector2 force)
     {
         // applyed force should be multiplied by time
-        // if (!physicsEnabeled) return; dont needed because of check in FixedUpdate
+        // if (!physicsEnabled) return; // don't needed because of check in FixedUpdate()
         netForce += force;
     }
 
@@ -187,19 +189,19 @@ public class PhysicsProperty : PhysicsSystem
 
     public void disablePhysics()
     {
-        physicsEnabeled = false;
+        physicsEnabled = false;
         OnDisable();
     }
 
     public void enablePhysics()
     {
-        physicsEnabeled = true;
+        physicsEnabled = true;
         OnEnable();
     }
 
     public void SetOnOrbit(GameObject target)
     {
-        if (!physicsEnabeled) return;
+        if (!physicsEnabled) return;
 
         Vector2 forceDirection = target.transform.position - transform.position;
         float distance = Vector2.Distance(target.transform.position, transform.position);
@@ -212,42 +214,30 @@ public class PhysicsProperty : PhysicsSystem
         velocity = orbitalVelocity;
     }
 
-    // body ignore forces other then gravity of target, until threshold is reached
-    // to prevent it from slowly drifting from orbit
+    // Body ignores forces other than gravity of the target until the threshold is reached,
+    // preventing it from slowly drifting from its orbit.
     public void KeepOnOrbit(
         GameObject source = null,
         float gravityFractionThreshold = 0.5f, 
         float accelerationThreshold = 0.0f, 
         float forceThreshold = 0.0f)
     {
-        if (!physicsEnabeled) return;
+        if (!physicsEnabled) return;
 
         if (source == null) keptOnOrbit = false;
         else
         {   
-            if (forceThreshold != 0.0f)
+            if (forceThreshold == 10.0f)
             {
                 keptOnOrbitForceThreshold = forceThreshold;
             }
-            else if (accelerationThreshold != 0.0f)
+            else if (accelerationThreshold == 10.0f)
             { 
                 keptOnOrbitForceThreshold = accelerationThreshold * Mass;
             }
             else
             {
                 keptOnOrbitForceThreshold = GravityBetween(gameObject, source).magnitude * Time.fixedDeltaTime * gravityFractionThreshold;
-            }
-
-            Vector2 GravitySourceForce = GravityBetween(gameObject, source) * Time.fixedDeltaTime;
-            float drift = (GravitySourceForce - netForce).magnitude;
-            if (drift > keptOnOrbitForceThreshold)
-            {
-                Debug.Log("Orbit impossible");
-            }
-            else
-            {
-                keptOnOrbit = true;
-                OrbitSource = source;
             }
         }
     }
@@ -257,10 +247,10 @@ public class PhysicsProperty : PhysicsSystem
         return OrbitSource;
     }
 
-    // merge two physics bodies
+    // merge two celestial bodies
     public void Merge(GameObject target, string type = "", bool destroyTarget = false, bool changeRadius = true, bool changePosition = true)
     {
-        if (!physicsEnabeled) return;
+        if (!physicsEnabled) return;
 
         PhysicsProperty targetPhysicsProperty = target.GetComponent<PhysicsProperty>();
 
@@ -282,11 +272,9 @@ public class PhysicsProperty : PhysicsSystem
         // }
 
         // change radius based on previous atmosphere radius and mass change
+        // assuming 2D space
         if (changeRadius)
         {
-            // M/R^2 = u
-            // m/r = M/R^2
-            // M * r^2 / m = R^2 
             // R = sqrt(M * r^2 / m)
             mergedRadius = radius * Mathf.Sqrt(mergedMass / mass);
             Debug.Log("Merged radius: " + mergedRadius);

@@ -41,7 +41,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180249211341585790}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 3
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -116,7 +116,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 5
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -169,7 +169,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 13
+      scalar: 7
       minScalar: 2
       maxCurve:
         serializedVersion: 2
@@ -287,7 +287,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
+      scalar: 0.6
       minScalar: 0.1
       maxCurve:
         serializedVersion: 2
@@ -980,7 +980,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 1000
+        scalar: 700
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -4915,8 +4915,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 0.75}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 621161225515460373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4960,9 +4960,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -9
+  m_SortingOrder: -11
   m_Sprite: {fileID: 21300000, guid: 74ea9ee2b5dba0044b501259b0b16eaa, type: 3}
-  m_Color: {r: 1, g: 0.45490196, b: 0, a: 0.16862746}
+  m_Color: {r: 0.49803922, g: 0.5176471, b: 0.13725491, a: 0.20392157}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4983,9 +4983,9 @@ GameObject:
   - component: {fileID: 621161225515460373}
   - component: {fileID: 5082675520563864579}
   - component: {fileID: 1287720922069732026}
-  - component: {fileID: 2870486709399802169}
+  - component: {fileID: 5258803368139890784}
   m_Layer: 0
-  m_Name: Star
+  m_Name: RockyPlanet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5001,7 +5001,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5898911957116231358}
@@ -5049,8 +5049,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -10
-  m_Sprite: {fileID: 21300000, guid: c75b56c060557eb4ea69cfbc874489ac, type: 3}
-  m_Color: {r: 1, g: 0.45456696, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: cc7ced15a2ea6e24b90b479ab0e6565f, type: 3}
+  m_Color: {r: 0.49876222, g: 0.5169811, b: 0.13558558, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5077,14 +5077,14 @@ MonoBehaviour:
   - Planet
   - Moon
   - Ship
-  bodyTypeIndex: 0
-  bodyType: Star
+  bodyTypeIndex: 1
+  bodyType: Planet
   physicsEnabled: 1
-  mass: 10000
-  radius: 50
-  atmosphereRadius: 75
+  mass: 125
+  radius: 4
+  atmosphereRadius: 6
   velocity: {x: 0, y: 0}
---- !u!114 &2870486709399802169
+--- !u!114 &5258803368139890784
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -31,7 +31,7 @@ public class PlayerShipController : Ship
     // Update is called once per frame
     void Update()
     {
-        // Steering INPUT
+        // Steering
         input.x = Input.GetAxis("Horizontal");
         input.y = Input.GetAxis("Vertical");
 
@@ -46,7 +46,7 @@ public class PlayerShipController : Ship
         }
 
 
-        // INPUT
+        // other
         if (Input.GetKeyDown(KeyCode.F)) //orbit nearest celestial body
         {
             GameObject source = physicsProperty.NearestGravitySource();
@@ -54,8 +54,7 @@ public class PlayerShipController : Ship
             physicsProperty.KeepOnOrbit(source);
         }
 
-
-        // Control
+        // Thrust control
         Thrust(Input.GetKey("space"));
         RotationControll();
     }
@@ -81,8 +80,6 @@ public class PlayerShipController : Ship
             var emission = thrusterParticleSystem.emission;
             emission.enabled = true;
 
-            // RotationControll();
-
             Vector2 force = transform.rotation * Vector2.down * thrustForce * Time.deltaTime * -1;
             physicsProperty.ApplyForce(force);
         }
@@ -95,4 +92,4 @@ public class PlayerShipController : Ship
 }
 
 // TODO:
-// - set on orbit works only for if alredy in aproximate velocity
+// - set on orbit works only if alredy in approximately orbital velocity

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PhysicsSystem : MonoBehaviour
 {
-    [HideInInspector] public string[] optionList = new string[] { "Star", "Planet", "Moon", "Ship"}; // TODO: visible in inspector
+    [HideInInspector] public string[] optionList = new string[] { "Star", "Planet", "Moon", "Ship"};
     protected static Dictionary<string, List<GameObject>> PhisicsObjects;
     protected static bool ControllerReady = false;
     [HideInInspector] public static float gravitationalConstant = 1.0f;

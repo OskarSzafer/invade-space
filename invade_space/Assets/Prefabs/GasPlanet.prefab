@@ -5079,7 +5079,7 @@ MonoBehaviour:
   - Ship
   bodyTypeIndex: 1
   bodyType: Planet
-  physicsEnabeled: 1
+  physicsEnabled: 1
   mass: 100
   radius: 5
   atmosphereRadius: 10
@@ -5096,3 +5096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86083811582629f45bd7e08888345299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  physicsProperty: {fileID: 1287720922069732026}
+  explosionObject: {fileID: 1180249211341585790}
+  explosionParticleSystem: {fileID: 1095565285571264135}
+  atmosphereObject: {fileID: 1180249211341585790}
