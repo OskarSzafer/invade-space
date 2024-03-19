@@ -37,8 +37,8 @@ public class PhysicsProperty : PhysicsSystem
     void Awake()
     {
         mass = (mass == 0) ? 1 : mass;
-        Radius = (Radius == 0) ? transform.localScale.x / 2 : Radius;
-        AtmosphereRadius = (atmosphereRadius < radius) ? Radius : AtmosphereRadius;
+        radius = (radius == 0) ? transform.localScale.x / 2 : radius;
+        atmosphereRadius = (atmosphereRadius < radius) ? radius : atmosphereRadius;
     }
 
     void Start()
