@@ -208,6 +208,7 @@ public class PhysicsProperty : PhysicsSystem
 
         float orbitalSpeed = Mathf.Sqrt(gravitationalConstant * target.GetComponent<PhysicsProperty>().Mass / distance);
         Vector2 orbitalVelocity = Vector2.Perpendicular(forceDirection).normalized * orbitalSpeed;
+        Vector2 worldOrbitalVelocity = orbitalVelocity + target.GetComponent<PhysicsProperty>().velocity;
 
         if (Vector2.Dot(velocity, orbitalVelocity) < 0) orbitalVelocity *= -1;
 

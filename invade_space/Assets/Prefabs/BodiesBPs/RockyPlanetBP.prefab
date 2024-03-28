@@ -4915,8 +4915,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 0.75}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 621161225515460373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4962,7 +4962,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -11
   m_Sprite: {fileID: 21300000, guid: 74ea9ee2b5dba0044b501259b0b16eaa, type: 3}
-  m_Color: {r: 0.7509433, g: 0.37263787, b: 0.37263787, a: 0.20392157}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4985,7 +4985,7 @@ GameObject:
   - component: {fileID: 1287720922069732026}
   - component: {fileID: 5258803368139890784}
   m_Layer: 0
-  m_Name: GasPlanet
+  m_Name: RockyPlanetBP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5001,7 +5001,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5898911957116231358}
@@ -5049,8 +5049,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -10
-  m_Sprite: {fileID: 21300000, guid: 0e2a0b87860848047ae6c2e3748986b3, type: 3}
-  m_Color: {r: 0.6301887, g: 0.32698467, b: 0.32698467, a: 1}
+  m_Sprite: {fileID: 21300000, guid: cc7ced15a2ea6e24b90b479ab0e6565f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5080,9 +5080,9 @@ MonoBehaviour:
   bodyTypeIndex: 1
   bodyType: Planet
   physicsEnabled: 1
-  mass: 100
-  radius: 5
-  atmosphereRadius: 10
+  mass: 125
+  radius: 4
+  atmosphereRadius: 6
   velocity: {x: 0, y: 0}
 --- !u!114 &5258803368139890784
 MonoBehaviour:
@@ -5099,4 +5099,4 @@ MonoBehaviour:
   physicsProperty: {fileID: 1287720922069732026}
   explosionObject: {fileID: 1180249211341585790}
   explosionParticleSystem: {fileID: 1095565285571264135}
-  atmosphereObject: {fileID: 1180249211341585790}
+  atmosphereObject: {fileID: 1301372215159835524}

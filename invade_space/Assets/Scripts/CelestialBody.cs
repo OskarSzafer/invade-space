@@ -10,7 +10,7 @@ public class CelestialBody : MonoBehaviour
     [SerializeField] protected GameObject explosionObject;
     [SerializeField] protected ParticleSystem explosionParticleSystem;
     // atmosphere object
-    [SerializeField] protected GameObject atmosphereObject;
+    [SerializeField] public GameObject atmosphereObject;
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +52,14 @@ public class CelestialBody : MonoBehaviour
     public void DestroyBody()
     {
         explosionParticleSystem.Play();
-        Destroy(gameObject, 1.0f);
+        Destroy(gameObject, 5.0f);
+        Invoke("HideBody", 0.3f);
+    }
+
+    private void HideBody()
+    {
+        gameObject.GetComponent<Renderer>().enabled = false;
+        atmosphereObject.GetComponent<Renderer>().enabled = false;
     }
 
     public void MergeBody(GameObject collidedObject)
@@ -67,6 +74,7 @@ public class CelestialBody : MonoBehaviour
         physicsProperty.Merge(collidedObject);
         collidedObjectPhysicsProperty.disablePhysics();
 
+        // TODO update sprites scale method
         float newScale = physicsProperty.Radius * 2;
         gameObject.transform.localScale = new Vector3(newScale, newScale, 1);
         float newAtmosphereScele = physicsProperty.AtmosphereRadius/physicsProperty.Radius;
