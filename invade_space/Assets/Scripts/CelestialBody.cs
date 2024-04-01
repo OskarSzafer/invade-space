@@ -69,6 +69,7 @@ public class CelestialBody : MonoBehaviour
         // respect hierarchy of celestial bodies
         if (physicsProperty.bodyTypeIndex > collidedObjectPhysicsProperty.bodyTypeIndex) return;
         if (collidedObjectPhysicsProperty.bodyType == "Ship") return;
+        if (physicsProperty.bodyTypeIndex == collidedObjectPhysicsProperty.bodyTypeIndex && physicsProperty.Mass < collidedObjectPhysicsProperty.Mass) return;
 
         Debug.Log(gameObject.name + " merged with: " + collidedObject.name);
         physicsProperty.Merge(collidedObject);

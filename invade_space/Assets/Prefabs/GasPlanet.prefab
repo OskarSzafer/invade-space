@@ -5099,4 +5099,4 @@ MonoBehaviour:
   physicsProperty: {fileID: 1287720922069732026}
   explosionObject: {fileID: 1180249211341585790}
   explosionParticleSystem: {fileID: 1095565285571264135}
-  atmosphereObject: {fileID: 1180249211341585790}
+  atmosphereObject: {fileID: 1301372215159835524}

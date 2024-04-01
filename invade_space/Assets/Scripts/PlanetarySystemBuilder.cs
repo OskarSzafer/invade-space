@@ -24,16 +24,17 @@ public class PlanetarySystemBuilder : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
-            GameObject sun = MakeStar(new Vector3(0, 0, 0), 10000000, new Color(1.0f, 0.87f, 0.13f, 1.0f));
+            // 1 mass unit = 1e24 kg
+            GameObject sun = MakeStar(new Vector3(0, 0, 0), 2000000, new Color(1.0f, 0.87f, 0.13f, 1.0f));
 
-            GameObject mercury = MakeRockyPlanet(new Vector3(0, 300, 0), 100, new Color(0.76f, 0.70f, 0.50f, 1.0f));
-            GameObject venus = MakeRockyPlanet(new Vector3(0, 370, 0), 100, new Color(0.80f, 0.50f, 0.20f, 1.0f));
-            GameObject earth = MakeRockyPlanet(new Vector3(0, 440, 0), 100, new Color(0.20f, 0.60f, 0.80f, 1.0f));
-            GameObject mars = MakeRockyPlanet(new Vector3(0, 510, 0), 100, new Color(0.80f, 0.20f, 0.20f, 1.0f));
-            GameObject jupiter = MakeGasPlanet(new Vector3(0, 600, 0), 100, new Color(0.80f, 0.60f, 0.40f, 1.0f));
-            GameObject saturn = MakeGasPlanet(new Vector3(0, 700, 0), 80, new Color(0.76f, 0.70f, 0.50f, 1.0f));
-            GameObject uranus = MakeGasPlanet(new Vector3(0, 800, 0), 70, new Color(0.0f, 0.8f, 1.0f, 1.0f));
-            GameObject neptune = MakeGasPlanet(new Vector3(0, 900, 0), 70, new Color(0.0f, 0.2f, 1.0f, 1.0f));
+            GameObject mercury = CreateCelestialBody(rockyPlanetPrefab, new Vector3(0, -45, 0), 0.3f, 1.4f, 1.4f*1.1f, new Color(0.76f, 0.70f, 0.50f, 1.0f));
+            GameObject venus = CreateCelestialBody(rockyPlanetPrefab, new Vector3(50, 0, 0), 4.8f, 2.0f, 2.0f*1.3f, new Color(0.80f, 0.50f, 0.20f, 1.0f));
+            GameObject earth = CreateCelestialBody(rockyPlanetPrefab, new Vector3(0, 55, 0), 6f, 1.5f, 1.5f*1.3f, new Color(0.20f, 0.60f, 0.80f, 1.0f));
+            GameObject mars = CreateCelestialBody(rockyPlanetPrefab, new Vector3(60, 0, 0), 0.65f, 1.0f, 1.0f*1.1f, new Color(0.80f, 0.20f, 0.20f, 1.0f));
+            GameObject jupiter = CreateCelestialBody(gasPlanetPrefab, new Vector3(0, 80, 0), 190.0f, 5.0f, 5.0f*1.4f, new Color(0.80f, 0.60f, 0.40f, 1.0f)); // mass 10 times smaller
+            GameObject saturn = CreateCelestialBody(gasPlanetPrefab, new Vector3(0, -100, 0), 57.0f, 4.0f, 4.0f*1.3f, new Color(0.76f, 0.70f, 0.50f, 1.0f)); // mass 10 times smaller
+            GameObject uranus = CreateCelestialBody(gasPlanetPrefab, new Vector3(-110, 0, 0), 8.6f, 2.6f, 2.6f*1.3f, new Color(0.0f, 0.8f, 1.0f, 1.0f)); // mass 10 times smaller
+            GameObject neptune = CreateCelestialBody(gasPlanetPrefab, new Vector3(85, 85, 0), 10.2f, 2.4f, 2.4f*1.25f, new Color(0.0f, 0.2f, 1.0f, 1.0f));
 
             mercury.GetComponent<PhysicsProperty>().SetOnOrbit(sun);
             venus.GetComponent<PhysicsProperty>().SetOnOrbit(sun);
@@ -85,9 +86,9 @@ public class PlanetarySystemBuilder : MonoBehaviour
         return CreateCelestialBody(starPrefab, position, mass, radius, atmosphereRadius, color);
     }
 
-    public GameObject MakeGasPlanet(Vector3 position, float mass, Color color, float radiusesDependency = 1.5f)
+    public GameObject MakeGasPlanet(Vector3 position, float mass, Color color, float radiusesDependency = 1.4f)
     {
-        float radiusFactor = 0.3f;
+        float radiusFactor = 0.003f; //0.02f //calculated for saturn
 
         float radius = mass * radiusFactor;
         float atmosphereRadius = radius * radiusesDependency;
@@ -95,9 +96,9 @@ public class PlanetarySystemBuilder : MonoBehaviour
         return CreateCelestialBody(gasPlanetPrefab, position, mass, radius, atmosphereRadius, color);
     }
 
-    public GameObject MakeRockyPlanet(Vector3 position, float mass, Color color, float radiusesDependency = 1.3f)
+    public GameObject MakeRockyPlanet(Vector3 position, float mass, Color color, float radiusesDependency = 1.2f)
     {
-        float radiusFactor = 0.15f;
+        float radiusFactor = 0.2f;
 
         float radius = mass * radiusFactor;
         float atmosphereRadius = radius * radiusesDependency;

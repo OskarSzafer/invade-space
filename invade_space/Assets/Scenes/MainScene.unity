@@ -402,7 +402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8383520619116863224, guid: c9bcd2bd1c62476439b03ae7bcbd0a14, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -427,11 +427,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5283939084941509926, guid: 05a75183b81b8d24e8d51e71ac7ec88b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: 52
       objectReference: {fileID: 0}
     - target: {fileID: 5283939084941509926, guid: 05a75183b81b8d24e8d51e71ac7ec88b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5283939084941509926, guid: 05a75183b81b8d24e8d51e71ac7ec88b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -532,7 +532,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 50
+  orthographic size: 30
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -727,7 +727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8383520619116863224, guid: 7feae746d6b2887439e66c4789705461, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
