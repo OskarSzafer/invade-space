@@ -143,6 +143,7 @@ MonoBehaviour:
   starPrefab: {fileID: 8383520619116863224, guid: 99af0fadd95387a4f9a033d625ac4574, type: 3}
   gasPlanetPrefab: {fileID: 8383520619116863224, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
   rockyPlanetPrefab: {fileID: 8383520619116863224, guid: 1d096a8da0eb9aa43930b3e03b46fd35, type: 3}
+  moonPrefab: {fileID: 8383520619116863224, guid: 0a3d1dc8e17542447a8c84cba5d323a7, type: 3}
 --- !u!1001 &624911769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -427,7 +428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5283939084941509926, guid: 05a75183b81b8d24e8d51e71ac7ec88b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 52
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5283939084941509926, guid: 05a75183b81b8d24e8d51e71ac7ec88b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -532,7 +533,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 30
+  orthographic size: 90
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

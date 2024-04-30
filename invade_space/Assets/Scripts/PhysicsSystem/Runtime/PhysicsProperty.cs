@@ -212,7 +212,7 @@ public class PhysicsProperty : PhysicsSystem
 
         if (Vector2.Dot(velocity, orbitalVelocity) < 0) orbitalVelocity *= -1;
 
-        velocity = orbitalVelocity;
+        velocity = worldOrbitalVelocity;
     }
 
     // Body ignores forces other than gravity of the target until the threshold is reached,
