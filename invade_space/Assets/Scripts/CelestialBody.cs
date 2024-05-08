@@ -15,7 +15,7 @@ public class CelestialBody : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // disabeled beacause of the Instantiate initialization order conflict
+        // Disabled due to Instantiate initialization order conflict.
         /*
         physicsProperty = GetComponent<PhysicsProperty>();
         explosionObject = transform.Find("Explosion").gameObject;
@@ -72,14 +72,11 @@ public class CelestialBody : MonoBehaviour
         if (physicsProperty.bodyTypeIndex == collidedObjectPhysicsProperty.bodyTypeIndex && physicsProperty.Mass < collidedObjectPhysicsProperty.Mass) return;
 
         Debug.Log(gameObject.name + " merged with: " + collidedObject.name);
+
         physicsProperty.Merge(collidedObject);
         collidedObjectPhysicsProperty.disablePhysics();
 
-        // TODO update sprites scale method
-        float newScale = physicsProperty.Radius * 2;
-        gameObject.transform.localScale = new Vector3(newScale, newScale, 1);
-        float newAtmosphereScele = physicsProperty.AtmosphereRadius/physicsProperty.Radius;
-        atmosphereObject.transform.localScale = new Vector3(newAtmosphereScele, newAtmosphereScele, 1);
+        updateSpritesScale();
 
         collidedObject.GetComponent<CelestialBody>().DestroyBody();
     }

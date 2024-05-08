@@ -16,7 +16,7 @@ public class PlanetarySystemBuilder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -26,14 +26,14 @@ public class PlanetarySystemBuilder : MonoBehaviour
         {
             //MakeSolarSystem();
             StartCoroutine(MakeSolarSystemAnimeted());
-            Invoke("RainOfDebris", 8.6f);
+            Invoke("RainOfDebris", 8.3f);
         }
 
         if (Input.GetKeyDown(KeyCode.J))
         {
             //MakeSolarSystem();
             StartCoroutine(MakeSolarSystemAnimeted());
-            Invoke("RoguePlanet", 5.3f);
+            Invoke("RoguePlanet", 5.35f);
         }
 
         if (Input.GetKeyDown(KeyCode.N))
@@ -181,7 +181,7 @@ public class PlanetarySystemBuilder : MonoBehaviour
         float radius = 0.4f;
         float atmosphereRadius = radius;
 
-        for (int i = 0; i < 80; i++)
+        for (int i = 0; i < 85; i++)
         {
             Vector3 position = new Vector3(Random.Range(-100, 100), Random.Range(-230, -330), 0);
             
