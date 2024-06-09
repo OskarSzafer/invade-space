@@ -33,6 +33,9 @@ public class PhysicsProperty : PhysicsSystem
     public delegate void CollisionEventHandler(GameObject collidedObject);
     public event CollisionEventHandler OnCollisionDetected;
 
+    // GETTERS
+    public bool KeptOnOrbit { get { return keptOnOrbit; } }
+
 
     void Awake()
     {
@@ -228,11 +231,14 @@ public class PhysicsProperty : PhysicsSystem
         if (source == null) keptOnOrbit = false;
         else
         {   
-            if (forceThreshold == 10.0f)
+            keptOnOrbit = true;
+            OrbitSource = source;
+
+            if (forceThreshold != 0.0f)
             {
                 keptOnOrbitForceThreshold = forceThreshold;
             }
-            else if (accelerationThreshold == 10.0f)
+            else if (accelerationThreshold != 0.0f)
             { 
                 keptOnOrbitForceThreshold = accelerationThreshold * Mass;
             }
