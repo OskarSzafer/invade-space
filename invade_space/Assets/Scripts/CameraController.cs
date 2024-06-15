@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     
     // Camera zoom
     private float elapsedTime;
-    [SerializeField] private float zoomIn = 4.0f;
+    [SerializeField] private float zoomIn = 6.0f;
     [SerializeField] private float zoomOut = 10.0f;
     [SerializeField] private float zoomTime = 1.0f;
     [SerializeField] private AnimationCurve zoomCurve;
@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
         float procetage = elapsedTime / zoomTime;
         GetComponent<Camera>().orthographicSize = Mathf.Lerp(zoomOut, zoomIn, zoomCurve.Evaluate(procetage));
 
-        if (player.GetComponent<PhysicsProperty>().KeptOnOrbit)
+        if (player.GetComponent<PhysicsProperty>().isKeptOnOrbit)
         {
             elapsedTime += Time.deltaTime;
         }

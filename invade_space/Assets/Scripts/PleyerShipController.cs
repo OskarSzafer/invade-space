@@ -45,6 +45,9 @@ public class PlayerShipController : Ship
             inputRotation = transform.eulerAngles.z;
         }
 
+        // Thrust control
+        Thrust(Input.GetKey("space"));
+        RotationControll();
 
         // other
         if (Input.GetKeyDown(KeyCode.F)) //orbit nearest celestial body
@@ -54,9 +57,11 @@ public class PlayerShipController : Ship
             physicsProperty.KeepOnOrbit(source);
         }
 
-        // Thrust control
-        Thrust(Input.GetKey("space"));
-        RotationControll();
+        if (Input.GetKeyDown(KeyCode.E)) // make factory
+        {
+            if (!physicsProperty.isKeptOnOrbit) return;
+            physicsProperty.GetOrbitSource.GetComponent<StructureMaker>().makeStructure("factory", transform.position);
+        }
     }
 
 

@@ -34,7 +34,8 @@ public class PhysicsProperty : PhysicsSystem
     public event CollisionEventHandler OnCollisionDetected;
 
     // GETTERS
-    public bool KeptOnOrbit { get { return keptOnOrbit; } }
+    public bool isKeptOnOrbit { get { return keptOnOrbit; } }
+    public GameObject GetOrbitSource { get { return OrbitSource; } }
 
 
     void Awake()
@@ -213,7 +214,7 @@ public class PhysicsProperty : PhysicsSystem
         Vector2 orbitalVelocity = Vector2.Perpendicular(forceDirection).normalized * orbitalSpeed;
         Vector2 worldOrbitalVelocity = orbitalVelocity + target.GetComponent<PhysicsProperty>().velocity;
 
-        if (Vector2.Dot(velocity, orbitalVelocity) < 0) orbitalVelocity *= -1;
+        if (Vector2.Dot(velocity, orbitalVelocity) < 0) worldOrbitalVelocity *= -1;
 
         velocity = worldOrbitalVelocity;
     }
@@ -247,11 +248,6 @@ public class PhysicsProperty : PhysicsSystem
                 keptOnOrbitForceThreshold = GravityBetween(gameObject, source).magnitude * Time.fixedDeltaTime * gravityFractionThreshold;
             }
         }
-    }
-
-    public GameObject GetOrbitSource()
-    {
-        return OrbitSource;
     }
 
     // merge two celestial bodies

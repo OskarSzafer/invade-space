@@ -123,6 +123,27 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &899917132 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8383520619116863224, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
+  m_PrefabInstance: {fileID: 1297535387}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &899917137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899917132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4b37939dc08b2e4eaf24fc0772b02a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  structuresTypes:
+  - factory
+  - mine
+  Structures: []
 --- !u!1001 &1297535387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -145,7 +166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -70
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
       propertyPath: m_LocalPosition.y
@@ -187,6 +208,10 @@ PrefabInstance:
       propertyPath: radius
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 1287720922069732026, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
+      propertyPath: atmosphereRadius
+      value: 26.25
+      objectReference: {fileID: 0}
     - target: {fileID: 1377892778953276960, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
       propertyPath: m_Color.b
       value: 0.39215687
@@ -218,7 +243,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8383520619116863224, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 899917137}
   m_SourcePrefab: {fileID: 100100000, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
 --- !u!1001 &1957637281
 PrefabInstance:
@@ -387,8 +415,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2066757110}
-  zoomIn: 4
-  zoomOut: 10
+  zoomIn: 6
+  zoomOut: 20
   zoomTime: 1.5
   zoomCurve:
     serializedVersion: 2
