@@ -53,6 +53,7 @@ public class PlayerShipController : Ship
         if (Input.GetKeyDown(KeyCode.F)) //orbit nearest celestial body
         {
             GameObject source = physicsProperty.NearestGravitySource();
+            Debug.Log(source.name + "--------------------------------------------------------------");
             physicsProperty.SetOnOrbit(source);
             physicsProperty.KeepOnOrbit(source);
         }

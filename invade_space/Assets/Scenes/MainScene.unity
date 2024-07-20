@@ -123,131 +123,43 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &899917132 stripped
+--- !u!1 &251664166 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 8383520619116863224, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-  m_PrefabInstance: {fileID: 1297535387}
+  m_CorrespondingSourceObject: {fileID: 2454004255938680893, guid: 9dd99a356d741e345af932e9afda2e88, type: 3}
+  m_PrefabInstance: {fileID: 802768825864009278}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &899917137
+--- !u!114 &251664169
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 899917132}
+  m_GameObject: {fileID: 251664166}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4b37939dc08b2e4eaf24fc0772b02a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a6b24c76f762594a88fc444e74766f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  structuresTypes:
-  - factory
-  - mine
-  Structures: []
---- !u!1001 &1297535387
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -40
-      objectReference: {fileID: 0}
-    - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 621161225515460373, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1287720922069732026, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: radius
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1287720922069732026, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: atmosphereRadius
-      value: 26.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1377892778953276960, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_Color.b
-      value: 0.39215687
-      objectReference: {fileID: 0}
-    - target: {fileID: 1377892778953276960, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_Color.g
-      value: 0.6745098
-      objectReference: {fileID: 0}
-    - target: {fileID: 1377892778953276960, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_Color.r
-      value: 0.93333334
-      objectReference: {fileID: 0}
-    - target: {fileID: 5082675520563864579, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_Color.b
-      value: 0.3921751
-      objectReference: {fileID: 0}
-    - target: {fileID: 5082675520563864579, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_Color.g
-      value: 0.67278814
-      objectReference: {fileID: 0}
-    - target: {fileID: 5082675520563864579, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_Color.r
-      value: 0.93207544
-      objectReference: {fileID: 0}
-    - target: {fileID: 8383520619116863224, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      propertyPath: m_Name
-      value: GasPlanetBP
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8383520619116863224, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 899917137}
-  m_SourcePrefab: {fileID: 100100000, guid: 8696f17acd8a99549b64394ac01b4e78, type: 3}
+  StarMinMass: 100000
+  StarMaxMass: 100000
+  StarMinRadius: 100
+  StarMaxRadius: 150
+  StarMaxAtmosphereFactor: 1.5
+  GasPlanetMinMass: 1000
+  GasPlanetMaxMass: 2000
+  GasPlanetMinRadius: 30
+  GasPlanetMaxRadius: 40
+  GasPlanetMaxAtmosphereFactor: 1.3
+  RockyPlanetMinMass: 500
+  RockyPlanetMaxMass: 1000
+  RockyPlanetMinRadius: 10
+  RockyPlanetMaxRadius: 20
+  RockyPlanetMaxAtmosphereFactor: 1.2
+  MoonMinMass: 10
+  MoonMaxMass: 100
+  MoonMinRadius: 1
+  MoonMaxRadius: 2
+  MoonMaxAtmosphereFactor: 1
 --- !u!1001 &1957637281
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -270,7 +182,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5283939084941509926, guid: 05a75183b81b8d24e8d51e71ac7ec88b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -605
       objectReference: {fileID: 0}
     - target: {fileID: 5283939084941509926, guid: 05a75183b81b8d24e8d51e71ac7ec88b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -499,10 +411,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7500333264977960978, guid: 9dd99a356d741e345af932e9afda2e88, type: 3}
+      propertyPath: temporalGravitationalConstant
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2454004255938680893, guid: 9dd99a356d741e345af932e9afda2e88, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 251664169}
   m_SourcePrefab: {fileID: 100100000, guid: 9dd99a356d741e345af932e9afda2e88, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -511,4 +430,3 @@ SceneRoots:
   - {fileID: 2033265727}
   - {fileID: 802768825864009278}
   - {fileID: 1957637281}
-  - {fileID: 1297535387}
