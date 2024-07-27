@@ -8,29 +8,29 @@ public class SystemMaker : MonoBehaviour
     // Star
     [SerializeField] private int StarMinMass = 100000;
     [SerializeField] private int StarMaxMass = 100000;
-    [SerializeField] private int StarMinRadius = 100;
-    [SerializeField] private int StarMaxRadius = 150;
+    [SerializeField] private float StarMinRadius = 32.4f;//36 - 10%
+    [SerializeField] private float StarMaxRadius = 39.6f;//36 + 10%
     [SerializeField] private float StarMaxAtmosphereFactor = 1.5f;
 
     // Gas planet
-    [SerializeField] private int GasPlanetMinMass = 1000;
-    [SerializeField] private int GasPlanetMaxMass = 2000;
-    [SerializeField] private int GasPlanetMinRadius = 30;
-    [SerializeField] private int GasPlanetMaxRadius = 40;
+    [SerializeField] private int GasPlanetMinMass = 100;
+    [SerializeField] private int GasPlanetMaxMass = 200;
+    [SerializeField] private float GasPlanetMinRadius = 6.0f;
+    [SerializeField] private float GasPlanetMaxRadius = 6.6f;//6 + 10%
     [SerializeField] private float GasPlanetMaxAtmosphereFactor = 1.3f;
 
     // Rocky planet
-    [SerializeField] private int RockyPlanetMinMass = 500;
-    [SerializeField] private int RockyPlanetMaxMass = 1000;
-    [SerializeField] private int RockyPlanetMinRadius = 10;
-    [SerializeField] private int RockyPlanetMaxRadius = 20;
+    [SerializeField] private int RockyPlanetMinMass = 50;
+    [SerializeField] private int RockyPlanetMaxMass = 100;
+    [SerializeField] private float RockyPlanetMinRadius = 5.4f;//6 - 10%
+    [SerializeField] private float RockyPlanetMaxRadius = 6.0f;
     [SerializeField] private float RockyPlanetMaxAtmosphereFactor = 1.2f;
 
     // Moon
-    [SerializeField] private int MoonMinMass = 10;
-    [SerializeField] private int MoonMaxMass = 100;
-    [SerializeField] private int MoonMinRadius = 1;
-    [SerializeField] private int MoonMaxRadius = 2;
+    [SerializeField] private int MoonMinMass = 1;
+    [SerializeField] private int MoonMaxMass = 10;
+    [SerializeField] private float MoonMinRadius = 1.5f;
+    [SerializeField] private float MoonMaxRadius = 2.5f;
     [SerializeField] private float MoonMaxAtmosphereFactor = 1.0f;
 
     // Start is called before the first frame update
@@ -54,7 +54,7 @@ public class SystemMaker : MonoBehaviour
         // TODO: binary system
         GameObject Star = CreateStar(new Vector3(0, 0, 0));
 
-        int distanceFromStar = StarMaxRadius*2;
+        float distanceFromStar = StarMaxRadius*3;
 
         // Create planets
         for (int i = 0; i < Random.Range(2, 10); i++)
@@ -85,7 +85,7 @@ public class SystemMaker : MonoBehaviour
     public GameObject CreateStar(Vector3 position, Vector2 velocity = default(Vector2), GameObject orbitSource = null)
     {
         int mass = Random.Range(StarMinMass, StarMaxMass);
-        int radius = Random.Range(StarMinRadius, StarMaxRadius);
+        float radius = Random.Range(StarMinRadius, StarMaxRadius);
         float AtmosphereFactor = Random.Range(1.05f, StarMaxAtmosphereFactor);
         float atmosphereRadius = radius * AtmosphereFactor;
 
@@ -103,7 +103,7 @@ public class SystemMaker : MonoBehaviour
     public GameObject CreateGasPlanet(Vector3 position, Vector2 velocity = default(Vector2), GameObject orbitSource = null)
     {
         int mass = Random.Range(GasPlanetMinMass, GasPlanetMaxMass);
-        int radius = Random.Range(GasPlanetMinRadius, GasPlanetMaxRadius);
+        float radius = Random.Range(GasPlanetMinRadius, GasPlanetMaxRadius);
         float AtmosphereFactor = Random.Range(1.05f, GasPlanetMaxAtmosphereFactor);
         float atmosphereRadius = radius * AtmosphereFactor;
 
@@ -121,7 +121,7 @@ public class SystemMaker : MonoBehaviour
     public GameObject CreateRockyPlanet(Vector3 position, Vector2 velocity = default(Vector2), GameObject orbitSource = null)
     {
         int mass = Random.Range(RockyPlanetMinMass, RockyPlanetMaxMass);
-        int radius = Random.Range(RockyPlanetMinRadius, RockyPlanetMaxRadius);
+        float radius = Random.Range(RockyPlanetMinRadius, RockyPlanetMaxRadius);
         float AtmosphereFactor = Random.Range(1.05f, RockyPlanetMaxAtmosphereFactor);
         float atmosphereRadius = radius * AtmosphereFactor;
 
@@ -139,7 +139,7 @@ public class SystemMaker : MonoBehaviour
     public GameObject CreateMoon(Vector3 position, Vector2 velocity = default(Vector2), GameObject orbitSource = null)
     {
         int mass = Random.Range(MoonMinMass, MoonMaxMass);
-        int radius = Random.Range(MoonMinRadius, MoonMaxRadius);
+        float radius = Random.Range(MoonMinRadius, MoonMaxRadius);
         float AtmosphereFactor = Random.Range(1.05f, MoonMaxAtmosphereFactor);
         float atmosphereRadius = radius * AtmosphereFactor;
 

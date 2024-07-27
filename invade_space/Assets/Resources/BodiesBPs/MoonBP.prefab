@@ -4984,6 +4984,7 @@ GameObject:
   - component: {fileID: 5082675520563864579}
   - component: {fileID: 1287720922069732026}
   - component: {fileID: 5258803368139890784}
+  - component: {fileID: -6947667304857557238}
   m_Layer: 0
   m_Name: MoonBP
   m_TagString: Untagged
@@ -5100,3 +5101,16 @@ MonoBehaviour:
   explosionObject: {fileID: 1180249211341585790}
   explosionParticleSystem: {fileID: 1095565285571264135}
   atmosphereObject: {fileID: 1301372215159835524}
+--- !u!114 &-6947667304857557238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8383520619116863224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42bba9e9e942e244b862117a746e4314, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orbitMarkerPrefab: {fileID: 5125725913525394281, guid: 3f60057e1c8efb4429c689d85c85d216, type: 3}

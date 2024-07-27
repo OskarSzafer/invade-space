@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 42bba9e9e942e244b862117a746e4314
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - orbitMarkerPrefab: {fileID: 5125725913525394281, guid: 3f60057e1c8efb4429c689d85c85d216, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

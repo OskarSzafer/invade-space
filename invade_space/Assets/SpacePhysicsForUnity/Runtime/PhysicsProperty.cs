@@ -92,8 +92,6 @@ public class PhysicsProperty : PhysicsSystem
         Vector3 forceScaled = new Vector3(netForce.x * 10, netForce.y * 10, 0);
         Debug.DrawLine(transform.position, transform.position + forceScaled, Color.red, 0.1f);
 
-        Debug.Log("Orb center " + OrbitCenter());
-
         if (physicsEnabled)
         {
             CalculateVelocity();
@@ -115,6 +113,7 @@ public class PhysicsProperty : PhysicsSystem
             else
             {
                 netForce = GravitySourceForce;
+                netForce += (OrbitSource.GetComponent<PhysicsProperty>().PreviousNetForce / OrbitSource.GetComponent<PhysicsProperty>().Mass) * mass;
             }
         }
 
@@ -236,10 +235,10 @@ public class PhysicsProperty : PhysicsSystem
 
         float orbitalSpeed = Mathf.Sqrt(gravitationalConstant * target.GetComponent<PhysicsProperty>().Mass / distance);
         Vector2 orbitalVelocity = Vector2.Perpendicular(forceDirection).normalized * orbitalSpeed;
+
+        if (Vector2.Dot(velocity, orbitalVelocity) < 0) orbitalVelocity *= -1;
+
         Vector2 worldOrbitalVelocity = orbitalVelocity + target.GetComponent<PhysicsProperty>().velocity;
-
-        if (Vector2.Dot(velocity, orbitalVelocity) < 0) worldOrbitalVelocity *= -1;
-
         velocity = worldOrbitalVelocity;
     }
 

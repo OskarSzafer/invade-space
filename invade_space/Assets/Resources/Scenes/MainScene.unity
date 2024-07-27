@@ -128,7 +128,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2454004255938680893, guid: 9dd99a356d741e345af932e9afda2e88, type: 3}
   m_PrefabInstance: {fileID: 802768825864009278}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &251664169
+--- !u!114 &251664172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,23 +142,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StarMinMass: 100000
   StarMaxMass: 100000
-  StarMinRadius: 100
-  StarMaxRadius: 150
+  StarMinRadius: 32.4
+  StarMaxRadius: 39.6
   StarMaxAtmosphereFactor: 1.5
   GasPlanetMinMass: 1000
   GasPlanetMaxMass: 2000
-  GasPlanetMinRadius: 30
-  GasPlanetMaxRadius: 40
+  GasPlanetMinRadius: 6
+  GasPlanetMaxRadius: 6.6
   GasPlanetMaxAtmosphereFactor: 1.3
   RockyPlanetMinMass: 500
   RockyPlanetMaxMass: 1000
-  RockyPlanetMinRadius: 10
-  RockyPlanetMaxRadius: 20
+  RockyPlanetMinRadius: 5.4
+  RockyPlanetMaxRadius: 6
   RockyPlanetMaxAtmosphereFactor: 1.2
   MoonMinMass: 10
   MoonMaxMass: 100
-  MoonMinRadius: 1
-  MoonMaxRadius: 2
+  MoonMinRadius: 1.5
+  MoonMaxRadius: 2.5
   MoonMaxAtmosphereFactor: 1
 --- !u!1001 &1957637281
 PrefabInstance:
@@ -182,7 +182,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5283939084941509926, guid: 05a75183b81b8d24e8d51e71ac7ec88b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -605
+      value: -250
       objectReference: {fileID: 0}
     - target: {fileID: 5283939084941509926, guid: 05a75183b81b8d24e8d51e71ac7ec88b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -283,7 +283,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -308,7 +308,7 @@ Transform:
   m_GameObject: {fileID: 2033265724}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 250, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -328,7 +328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2066757110}
   zoomIn: 6
-  zoomOut: 20
+  zoomOut: 15
   zoomTime: 1.5
   zoomCurve:
     serializedVersion: 2
@@ -421,7 +421,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2454004255938680893, guid: 9dd99a356d741e345af932e9afda2e88, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 251664169}
+      addedObject: {fileID: 251664172}
   m_SourcePrefab: {fileID: 100100000, guid: 9dd99a356d741e345af932e9afda2e88, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
