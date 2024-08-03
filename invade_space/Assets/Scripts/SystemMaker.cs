@@ -57,14 +57,15 @@ public class SystemMaker : MonoBehaviour
         float distanceFromStar = StarMaxRadius*3;
 
         // Create planets
-        for (int i = 0; i < Random.Range(2, 10); i++)
+        for (int i = 0; i < Random.Range(3, 10); i++)
         {
             distanceFromStar += Random.Range(4*GasPlanetMaxRadius, 24*RockyPlanetMinRadius);//30a 10b
             
             if (Random.Range(0, 2) == 0)
             {
                 GameObject Planet = CreateRockyPlanet(
-                    new Vector3(distanceFromStar, 0, 0), 
+                    //new Vector3(distanceFromStar, 0, 0), 
+                    RandomDirection() * distanceFromStar,
                     new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)), 
                     Star
                 );
@@ -72,7 +73,8 @@ public class SystemMaker : MonoBehaviour
             else
             {
                 GameObject Planet = CreateGasPlanet(
-                    new Vector3(distanceFromStar, 0, 0), 
+                    //new Vector3(distanceFromStar, 0, 0), 
+                    RandomDirection() * distanceFromStar,
                     new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)), 
                     Star
                 );
@@ -178,5 +180,15 @@ public class SystemMaker : MonoBehaviour
         celestialBody.GetComponent<CelestialBody>().atmosphereObject.GetComponent<Renderer>().material.color = color;
 
         return celestialBody;
+    }
+
+    private Vector2 RandomDirection()
+    {
+        float angle = Random.Range(0f, Mathf.PI * 2);
+
+        float x = Mathf.Cos(angle);
+        float y = Mathf.Sin(angle);
+
+        return new Vector2(x, y);
     }
 }
