@@ -70,7 +70,7 @@ MonoBehaviour:
   bodyTypeIndex: 3
   bodyType: Ship
   physicsEnabled: 1
-  mass: 10
+  mass: 1
   radius: 0
   atmosphereRadius: 0
   velocity: {x: 0, y: 0}
