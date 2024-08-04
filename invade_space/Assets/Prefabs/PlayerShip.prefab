@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11b8fd0526ec29f4091e49301860a672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrustForce: 10
+  thrustForce: 1
   rotationRate: 250
 --- !u!114 &6643703636698685826
 MonoBehaviour:
@@ -70,9 +70,9 @@ MonoBehaviour:
   bodyTypeIndex: 3
   bodyType: Ship
   physicsEnabled: 1
-  mass: 1
-  radius: 0
-  atmosphereRadius: 0
+  mass: 0.1
+  radius: 0.2
+  atmosphereRadius: 0.2
   velocity: {x: 0, y: 0}
 --- !u!1 &1204914766829562792
 GameObject:

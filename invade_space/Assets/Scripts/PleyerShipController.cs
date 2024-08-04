@@ -55,7 +55,7 @@ public class PlayerShipController : Ship
             GameObject source = physicsProperty.NearestGravitySource();
             Debug.Log(source.name);
             physicsProperty.SetOnOrbit(source);
-            physicsProperty.KeepOnOrbit(source);
+            physicsProperty.KeepOnOrbit(source, 7.0f);
         }
 
         if (Input.GetKeyDown(KeyCode.E)) // make factory

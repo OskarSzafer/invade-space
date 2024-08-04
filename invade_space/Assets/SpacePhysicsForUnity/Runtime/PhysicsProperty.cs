@@ -35,6 +35,7 @@ public class PhysicsProperty : PhysicsSystem
     public event CollisionEventHandler OnCollisionDetected;
 
     // GETTERS
+    public bool physicsEnabledStatus { get { return physicsEnabled; } }
     public bool isKeptOnOrbit { get { return keptOnOrbit; } }
     public GameObject GetOrbitSource { get { return OrbitSource; } }
     public Vector2 PreviousNetForce { get { return previousNetForce; } }
@@ -236,7 +237,7 @@ public class PhysicsProperty : PhysicsSystem
         float orbitalSpeed = Mathf.Sqrt(gravitationalConstant * target.GetComponent<PhysicsProperty>().Mass / distance);
         Vector2 orbitalVelocity = Vector2.Perpendicular(forceDirection).normalized * orbitalSpeed;
 
-        if (Vector2.Dot(velocity, orbitalVelocity) < 0) orbitalVelocity *= -1;
+        if (Vector2.Dot(velocity - target.GetComponent<PhysicsProperty>().velocity, orbitalVelocity) < 0) orbitalVelocity *= -1;
 
         Vector2 worldOrbitalVelocity = orbitalVelocity + target.GetComponent<PhysicsProperty>().velocity;
         velocity = worldOrbitalVelocity;

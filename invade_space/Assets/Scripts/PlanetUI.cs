@@ -24,6 +24,8 @@ public class PlanetUI2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        orbitMarker.SetActive(physicsProperty.physicsEnabledStatus);
+
         Vector2 orbitCenter = physicsProperty.OrbitCenter();
         float orbitRadius = (orbitCenter - (Vector2)transform.position).magnitude;
         if (float.IsNaN(orbitRadius))

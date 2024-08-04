@@ -5030,6 +5030,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orbitMarkerPrefab: {fileID: 5125725913525394281, guid: 3f60057e1c8efb4429c689d85c85d216, type: 3}
+  physicsProperty: {fileID: 1287720922069732026}
 --- !u!1 &8588149654390807494
 GameObject:
   m_ObjectHideFlags: 0

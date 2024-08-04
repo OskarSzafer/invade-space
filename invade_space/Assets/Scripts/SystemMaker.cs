@@ -59,8 +59,10 @@ public class SystemMaker : MonoBehaviour
         // Create planets
         for (int i = 0; i < Random.Range(3, 10); i++)
         {
-            distanceFromStar += Random.Range(4*GasPlanetMaxRadius, 24*RockyPlanetMinRadius);//30a 10b
+            //distanceFromStar += Random.Range(4*GasPlanetMaxRadius, 24*RockyPlanetMinRadius);//30a 10b
+            distanceFromStar += Random.Range(6*GasPlanetMaxRadius, 24*RockyPlanetMinRadius);
             
+
             if (Random.Range(0, 2) == 0)
             {
                 GameObject Planet = CreateRockyPlanet(

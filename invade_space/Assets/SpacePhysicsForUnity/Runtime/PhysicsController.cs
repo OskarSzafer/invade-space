@@ -76,7 +76,7 @@ public class PhysicsController : PhysicsSystem
 
                 if (collisionDependences[i, j])
                 {
-                    ApplyAtmosphericDragAndCollision (target, source);
+                    ApplyAtmosphericDragAndCollision(target, source);
                 }
 
             }

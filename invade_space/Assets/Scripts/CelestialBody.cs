@@ -11,6 +11,7 @@ public class CelestialBody : MonoBehaviour
     [SerializeField] protected ParticleSystem explosionParticleSystem;
     // atmosphere object
     [SerializeField] public GameObject atmosphereObject;
+    private float rotationSpeed = 10.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,13 +26,16 @@ public class CelestialBody : MonoBehaviour
 
         // Collision delegate - functions called when collision detected
         physicsProperty.OnCollisionDetected += OnCollision;
+
+        rotationSpeed = Random.Range(-rotationSpeed, rotationSpeed);
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        
+        float rotationAmount = rotationSpeed * Time.deltaTime;
+        atmosphereObject.transform.Rotate(0, 0, rotationAmount);
     }
 
 
