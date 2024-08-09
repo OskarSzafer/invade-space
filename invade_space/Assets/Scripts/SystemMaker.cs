@@ -14,7 +14,7 @@ public class SystemMaker : MonoBehaviour
 
     // Gas planet
     [SerializeField] private int GasPlanetMinMass = 100;
-    [SerializeField] private int GasPlanetMaxMass = 200;
+    [SerializeField] private int GasPlanetMaxMass = 150;
     [SerializeField] private float GasPlanetMinRadius = 6.0f;
     [SerializeField] private float GasPlanetMaxRadius = 6.6f;//6 + 10%
     [SerializeField] private float GasPlanetMaxAtmosphereFactor = 1.3f;
@@ -56,12 +56,21 @@ public class SystemMaker : MonoBehaviour
 
         float distanceFromStar = StarMaxRadius*3;
 
+        // ensure at least one rocky planet
+        // ---------------
+        distanceFromStar += Random.Range(6*GasPlanetMaxRadius, 24*RockyPlanetMinRadius);
+        GameObject RockyPlanet = CreateRockyPlanet(
+            RandomDirection() * distanceFromStar,
+            new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)), 
+            Star
+        );
+        // ---------------
+
         // Create planets
-        for (int i = 0; i < Random.Range(3, 10); i++)
+        for (int i = 0; i < Random.Range(3, 9); i++)
         {
             //distanceFromStar += Random.Range(4*GasPlanetMaxRadius, 24*RockyPlanetMinRadius);//30a 10b
             distanceFromStar += Random.Range(6*GasPlanetMaxRadius, 24*RockyPlanetMinRadius);
-            
 
             if (Random.Range(0, 2) == 0)
             {
@@ -108,7 +117,7 @@ public class SystemMaker : MonoBehaviour
     {
         int mass = Random.Range(GasPlanetMinMass, GasPlanetMaxMass);
         float radius = Random.Range(GasPlanetMinRadius, GasPlanetMaxRadius);
-        float AtmosphereFactor = Random.Range(1.05f, GasPlanetMaxAtmosphereFactor);
+        float AtmosphereFactor = Random.Range(1.2f, GasPlanetMaxAtmosphereFactor);
         float atmosphereRadius = radius * AtmosphereFactor;
 
         GameObject celestialBody = CreateCelestialBody("GasPlanetBP", position, mass, radius, atmosphereRadius);

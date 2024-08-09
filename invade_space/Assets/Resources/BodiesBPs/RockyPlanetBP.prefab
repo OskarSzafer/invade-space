@@ -4915,7 +4915,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 0.75}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 0.55}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 621161225515460373}
@@ -4985,6 +4985,7 @@ GameObject:
   - component: {fileID: 1287720922069732026}
   - component: {fileID: 5258803368139890784}
   - component: {fileID: 8398152766053157913}
+  - component: {fileID: 8369259070145283898}
   m_Layer: 0
   m_Name: RockyPlanetBP
   m_TagString: Untagged
@@ -5114,4 +5115,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orbitMarkerPrefab: {fileID: 5125725913525394281, guid: 3f60057e1c8efb4429c689d85c85d216, type: 3}
-  physicsProperty: {fileID: 1287720922069732026}
+--- !u!114 &8369259070145283898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8383520619116863224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4b37939dc08b2e4eaf24fc0772b02a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  structuresTypes:
+  - factory
+  - mine
+  Structures: []

@@ -181,6 +181,9 @@ public class PhysicsProperty : PhysicsSystem
     {
         Vector2 centripetalForceDirection = Vector2.Perpendicular(velocity).normalized;
         float centripetalForce = Vector2.Dot(previousNetForce / Time.fixedDeltaTime, centripetalForceDirection);
+        
+        if (centripetalForce == 0) return new Vector2(float.NaN, float.NaN);
+        
         float circularOrbitRadius = Mathf.Pow(velocity.magnitude, 2) / (centripetalForce / mass); // we need only perpendicular component of net force
         Vector2 circularOrbitCenter = (Vector2)transform.position + circularOrbitRadius*centripetalForceDirection;
         return circularOrbitCenter;

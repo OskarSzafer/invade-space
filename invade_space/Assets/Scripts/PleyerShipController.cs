@@ -49,19 +49,26 @@ public class PlayerShipController : Ship
         Thrust(Input.GetKey("space"));
         RotationControll();
 
-        // other
-        if (Input.GetKeyDown(KeyCode.F)) //orbit nearest celestial body
+        //orbit nearest celestial body
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            GameObject source = physicsProperty.NearestGravitySource();
-            Debug.Log(source.name);
-            physicsProperty.SetOnOrbit(source);
-            physicsProperty.KeepOnOrbit(source, 7.0f);
+            Orbit();
         }
 
-        if (Input.GetKeyDown(KeyCode.E)) // make factory
+        // make structure
+        if (physicsProperty.isKeptOnOrbit && physicsProperty.GetOrbitSource.GetComponent<StructureMaker>() != null)
         {
-            if (!physicsProperty.isKeptOnOrbit) return;
-            physicsProperty.GetOrbitSource.GetComponent<StructureMaker>().makeStructure("factory", transform.position);
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                List<string> structuresTypes = physicsProperty.GetOrbitSource.GetComponent<StructureMaker>().structuresTypes;
+                physicsProperty.GetOrbitSource.GetComponent<StructureMaker>().makeStructure(structuresTypes[0], transform.position);
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                List<string> structuresTypes = physicsProperty.GetOrbitSource.GetComponent<StructureMaker>().structuresTypes;
+                physicsProperty.GetOrbitSource.GetComponent<StructureMaker>().makeStructure(structuresTypes[1], transform.position);
+            }
         }
     }
 
@@ -95,7 +102,18 @@ public class PlayerShipController : Ship
             emission.enabled = false;
         }
     }
-}
 
-// TODO:
-// - set on orbit works only if alredy in approximately orbital velocity
+    protected void Orbit()
+    {
+        GameObject source = physicsProperty.NearestGravitySource();
+        Debug.Log(source.name);
+        physicsProperty.KeepOnOrbit(source, 7.0f);
+        Invoke("SetOrbitVelocity", 0.2f);
+    }
+
+    private void SetOrbitVelocity()
+    {
+        if (!physicsProperty.isKeptOnOrbit) return;
+        physicsProperty.SetOnOrbit(physicsProperty.GetOrbitSource);
+    }
+}

@@ -5,7 +5,7 @@ using UnityEngine;
 public class StructureMaker : MonoBehaviour
 {
     private string path = "Structures/";
-    [SerializeField] private List<string> structuresTypes = new List<string> {"factory", "mine"};
+    public List<string> structuresTypes = new List<string> {"factory", "mine"};
     // existing structures
     [HideInInspector] public List<GameObject> Structures;
     
