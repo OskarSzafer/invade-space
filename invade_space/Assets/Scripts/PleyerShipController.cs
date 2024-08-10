@@ -70,6 +70,15 @@ public class PlayerShipController : Ship
                 physicsProperty.GetOrbitSource.GetComponent<StructureMaker>().makeStructure(structuresTypes[1], transform.position);
             }
         }
+
+        // test
+        GameObject raycasted = physicsProperty.Raycast((Vector2)transform.position, new Vector2(0, 0), new string[] {"Star", "Planet", "Moon"});
+        if (raycasted != null)
+        {
+            Debug.Log(raycasted.name);
+        }else{
+            Debug.Log("No object");
+        }
     }
 
 

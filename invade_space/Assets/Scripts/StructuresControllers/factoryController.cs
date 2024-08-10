@@ -17,7 +17,7 @@ public class factoryController : MonoBehaviour
 
         sub.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
-        InvokeRepeating("makeCell", 0.0f, 1.0f);
+        InvokeRepeating("makeCell", 0.0f, 2.0f);
     }
 
     // Update is called once per frame

@@ -58,4 +58,88 @@ public class PhysicsSystem : MonoBehaviour
         
         return forceDirection * forceValue;
     }
+
+    //RAYCASTING
+    // types - list of body types to check for collision
+    // empty list means all types
+    public GameObject Raycast(Vector2 origin, Vector2 direction, float distance, string[] types = null)
+    {
+        Vector2 end = origin + direction * distance;
+
+        return Raycast(origin, end, types);
+    }
+
+    public GameObject Raycast(Vector2 beginning, Vector2 end, string[] types = null)
+    {
+        if (types == null)
+        {
+            types = optionList;
+        }
+
+        GameObject closestBody = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (string type in types)
+        {
+            foreach (GameObject body in PhisicsObjects[type])
+            {
+                PhysicsProperty physicsProperty = body.GetComponent<PhysicsProperty>();
+                Vector2 center = body.transform.position;
+                float radius = physicsProperty.Radius;
+
+                Vector2? intersection = GetClosestIntersection(beginning, end, center, radius);
+
+                if (intersection != null)
+                {
+                    float distance = Vector2.Distance(beginning, intersection.Value);
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestBody = body;
+                    }
+                }
+            }
+        }
+
+        return closestBody;
+    }
+
+    private Vector2? GetClosestIntersection(Vector2 p1, Vector2 p2, Vector2 center, float radius)
+    {
+        Vector2 d = p2 - p1;
+        Vector2 f = p1 - center;
+
+        float a = Vector2.Dot(d, d);
+        float b = 2 * Vector2.Dot(f, d);
+        float c = Vector2.Dot(f, f) - radius * radius;
+
+        float discriminant = b * b - 4 * a * c;
+
+        if (discriminant < 0)
+        {
+            // No intersection
+            return null;
+        }
+        else
+        {
+            // Ray intersects circle
+            discriminant = Mathf.Sqrt(discriminant);
+
+            float t1 = (-b - discriminant) / (2 * a);
+            float t2 = (-b + discriminant) / (2 * a);
+
+            if (t1 >= 0 && t1 <= 1)
+            {
+                return p1 + t1 * d;
+            }
+
+            if (t2 >= 0 && t2 <= 1)
+            {
+                return p1 + t2 * d;
+            }
+
+            // No valid intersection
+            return null;
+        }
+    }
 }
