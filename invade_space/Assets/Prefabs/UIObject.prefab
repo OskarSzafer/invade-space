@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3729705440662565973}
   - component: {fileID: 2287513817014874248}
+  - component: {fileID: -8054652723579333418}
   m_Layer: 0
-  m_Name: GridObject
+  m_Name: UIObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,3 +50,15 @@ MonoBehaviour:
   distanceBetweenMarkers: 10
   verticalMarkerPrefab: {fileID: 5125725913525394281, guid: c5ebde1bca4869e4c818bec2e636f719, type: 3}
   horizontalMarkerPrefab: {fileID: 5125725913525394281, guid: c5ebde1bca4869e4c818bec2e636f719, type: 3}
+--- !u!114 &-8054652723579333418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5590721430660174375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d72f0b2af3b34854ca84e76d51d0cdda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
